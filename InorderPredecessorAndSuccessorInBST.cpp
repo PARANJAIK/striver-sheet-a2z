@@ -9,8 +9,6 @@
 
 void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
 {
-
-// Your code goes here
 pre = NULL;
 suc = NULL;
 Node* cur = root;
