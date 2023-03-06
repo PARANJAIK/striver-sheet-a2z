@@ -29,9 +29,10 @@
             return -1;
         }
         int low = 1,high=0;
-        for(int i=0;i<n;i++){
-            high = max(high,bloomday[i]);
-        }
+//         for(int i=0;i<n;i++){
+//             high = max(high,bloomday[i]);
+//         }
+        high = *max_element(bloomday.begin(),bloomday.end());
         while(high-low>1){
             int mid = (low+high)>>1;
             bool x = check(bloomday,mid,k,m);
