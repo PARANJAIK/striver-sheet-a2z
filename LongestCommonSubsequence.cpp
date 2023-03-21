@@ -1,6 +1,37 @@
-// Q) Longest Common Subsequence -> https://leetcode.com/problems/longest-common-subsequence/description/
+ // Q) Longest Common Subsequence -> https://leetcode.com/problems/longest-common-subsequence/description/
 
     // Ans) 
+
+    // iii) Striver's approach (BOTTOM-UP) 
+
+    // (BEST USE FOR TEMPLATE AND TO FIND LCS FROM DP ARRAY)
+
+    int longestCommonSubsequence(string s,string t){
+        int n = s.size();
+        int m = t.size();
+        vector<vector<int>> tab(n+1,vector<int> (m+1));
+        for(int i=0;i<n+1;i++){
+            tab[i][m] = 0;
+        }
+        for(int j=0;j<m+1;j++){
+            tab[n][j] = 0;
+        }
+        for(int i=n-1;i>=0;i--){
+            for(int j=m-1;j>=0;j--){
+                if(s[i] == t[j]) tab[i][j] = 1 + tab[i+1][j+1];
+                else tab[i][j] = max(tab[i+1][j],tab[i][j+1]);
+            }
+        }
+        // for(int i=0;i<n;i++){
+        //     for(int j=0;j<m;j++){
+        //         cout<<tab[i][j]<<" ";    // TO PRINT THE DP TABULATION ARRAY
+        //     }
+        //     cout<<endl;
+        // }
+        return tab[0][0];
+    }
+
+
 
     // i) My approach (TOP-DOWN)(RUNS slightly better than striver's approach)(BUT striver has lesser code):
 
@@ -17,7 +48,14 @@
     //         mapp[text2[i]].push_back(i);
     //     }
     //     vector<vector<int>> memo(n+1,vector<int> (m+1,-1));
-    //     return solve(0,0,text1,text2,n,m,mapp,memo);
+    //     int ans = solve(0,0,text1,text2,n,m,mapp,memo);
+    //     for(int i=0;i<n;i++){
+    //         for(int j=0;j<m;j++){
+    //             cout<<memo[i][j]<<" ";
+    //         }
+    //         cout<<endl;
+    //     }
+    //     return ans;
     // }
 
     // int solve(int i,int j,string& text1,string& text2,int n,int m,unordered_map<char,vector<int>>& mapp,vector<vector<int>>& memo){
@@ -61,7 +99,7 @@
     //     return dp[i][j] = max(f(i-1,j,s,t,dp),f(i,j-1,s,t,dp));
     // }
 
-    // iii) My Bottom-Up approach : 
+    // iv) My Bottom-Up approach : 
     
     // int longestCommonSubsequence(string text1,string text2){
     //     if(text2.size() < text1.size()){
@@ -97,6 +135,12 @@
     //                 tab[i][j] = maxx;
     //             }
     //         }
+    //     }
+    //     for(int i=0;i<n+1;i++){
+    //         for(int j=0;j<m+1;j++){
+    //             cout<<tab[i][j]<<" ";
+    //         }
+    //         cout<<endl;
     //     }
     //     return tab[0][0];
     // }
