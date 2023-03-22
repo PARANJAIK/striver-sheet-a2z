@@ -28,9 +28,35 @@
         //     }
         //     cout<<endl;
         // }
+        // string x = returnlcs(tab,s,t);   // To print the LCS
+        // cout<<x<<endl;
         return tab[0][0];
     }
 
+    // FUNCTION TO RETURN THE LCS
+
+//     string returnlcs(vector<vector<int>>& tab,string& a,string& b){
+//     int n = tab.size() -1;
+//     int m = tab[0].size() -1;
+//     int i=0,j=0;
+//     string ans;
+//     while(i<n && j<m){
+//         if(a[i] == b[j]){
+//             ans.push_back(a[i]);
+//             i++;
+//             j++;
+//         }
+//         else{
+//             if(tab[i+1][j] > tab[i][j+1]){
+//                 i++;
+//             }
+//             else{
+//                 j++;
+//             }
+//         }
+//     }
+//     return ans;
+// }
 
 
     // i) My approach (TOP-DOWN)(RUNS slightly better than striver's approach)(BUT striver has lesser code):
