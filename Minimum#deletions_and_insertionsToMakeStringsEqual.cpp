@@ -2,7 +2,8 @@
 
     // Ans) 
     
-    // i) My approach :
+    // i) My approach : the approach is to find the length of longest common subsequence of both the strings and then basically delete those no.of characters from 
+    // string1 which are not part of lcs, then add those no.of characters from string2 which are not part of lcs to string1.
 	
 	int minOperations(string word1, string word2) 
 	{ 
@@ -35,5 +36,5 @@
         //     }
         //     cout<<endl;
         // }
-        return tab[0][0]; 
+        return tab[0][0];
     }
