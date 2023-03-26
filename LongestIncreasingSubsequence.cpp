@@ -2,7 +2,7 @@
 
     // Ans)
 
-    // i) O(n*n) time complexity solution : (TOP-DOWN APPROACH)
+    // i) O(n*n) time complexity solution and O(n*n) space complexity : (TOP-DOWN APPROACH)
 
     // int lengthOfLIS(vector<int>& nums) {
     //     int n = nums.size();
@@ -27,7 +27,7 @@
     //     return memo[ind][prevind] = ans;
     // }
 
-    // ii) O(n*logn) time complexity solution : (BINARY SEARCH APPROACH)
+    // ii) O(n*logn) time complexity solution and O(n) space complexity: (BINARY SEARCH APPROACH)
 
     // NOTE : The final subsequence that is stored in the temp vector is not the actual longest strictly increasing subsequence, but it just gives the length same as that of LIS.
 
@@ -50,7 +50,9 @@
     }
 
 
-    // iii) O(n*n) time complexity solution : (BOTTOM-UP APPROACH)
+    // iii) O(n*n) time complexity and O(n*n) space complexity: (BOTTOM-UP APPROACH)
+
+    // NOTE : USEFUL FOR PRINTING THE LIS.
 
     // int lengthOfLIS(vector<int>& nums){
     //     int n = nums.size();
@@ -67,5 +69,28 @@
     //             tab[i][j] = ans;
     //         }
     //     }
+    //     // for(int i=0;i<n+1;i++){
+    //     //     for(int j=0;j<n+1;j++){
+    //     //         cout<<tab[i][j]<<" ";     // FOR printing the tabulation array
+    //     //     }
+    //     //     cout<<endl;
+    //     // }
     //     return tab[0][0];
+    // }
+
+    // iv) O(n*n) time complexity and O(n) space complexity : 
+
+    // NOTE : USEFUL FOR PRINTING THE LIS.
+
+    // int lengthOfLIS(vector<int>& nums){
+    //     int n = nums.size();
+    //     vector<int> dp(n,1);
+    //     int maxi = 1;
+    //     for(int i=1;i<n;i++){
+    //         for(int j=0;j<i;j++){
+    //             if(nums[j] < nums[i]) dp[i] = max(dp[i],1 + dp[j]);
+    //         }
+    //         maxi = max(maxi,dp[i]);
+    //     }
+    //     return maxi;
     // }
