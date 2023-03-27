@@ -1,0 +1,6 @@
+https://www.codechef.com/problems/INTARR   Interesting Array
+https://www.codechef.com/problems/CNCTCT    connect all cities
+https://www.codechef.com/problems/SIMPLEARRAY   potato to gold
+https://www.codechef.com/problems/MAX1S    Maximize 1s
+
+

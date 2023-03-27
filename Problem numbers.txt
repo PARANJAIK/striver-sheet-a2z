@@ -1,0 +1,4 @@
+>>>>>>>>>>> Dynamic Programming -> 
+
+1) Ninja and his friends -> https://practice.geeksforgeeks.org/problems/chocolates-pickup/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=chocolates-pickup
+2) partition set into 2 subsets with minimum absolute sum difference -> https://leetcode.com/problems/partition-array-into-two-arrays-to-minimize-sum-difference/

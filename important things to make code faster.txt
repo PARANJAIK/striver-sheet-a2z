@@ -1,0 +1,110 @@
+1) \n is faster than endl
+
+2) x>>1 is faster than x/2;
+
+3) x&1==1 is faster than x%2==1
+
+4) we can use map<int,int> instead of frequency array, and at places where we need to generate vectors dynamically we can use 
+   map<int,vector<int>> also.
+  
+   > important point is map[k]=0, if k is a new key 
+
+5) difference between 
+  
+   i) a[i]&(1<<k) != 0    and  (a[i]>>k)&1 != 0
+
+   ii) (n/2)&1 == 0       and   (n/2)%2 == 0
+
+6) we use max() function for integers, similarly use fmax() function for double and float data types.
+
+7) INT_MAX =  2147483647
+   INT_MIN = -2147483648
+
+8) atoi() is a function which takes in a string and returns an integer and is used to convert string to int.
+
+9) int arr[n] = {0};  // this command creates an array with all the memory blocks initialised to zero.
+
+10) >> when we want to pass an array by reference : 
+
+    simply func(int arr[]){
+                                         // this will work
+           }
+
+    >> If we want to pass a vector<int> by reference : 
+
+           func(vector<int> arr){
+                                         // this will not work
+           }
+
+           func(vector<int>& arr){
+                                         // this will work
+           }
+
+
+11) Declaring a global vector, and using assign function to initialise its size and value : 
+
+    vector<vector<int>> dp;
+
+
+    dp.assign(n+1, vector<int> (m+1 , 1) );     // this will declare a 2D vector with size (n+1)x(m+1) and all its values initialised to 1.
+
+ 
+12) using memset function to initialise all values of an array :
+
+    int val[n] = {5} ;                        // this will only make val[0]=5 and all other values as 0;
+ 
+    int val[n];
+    memset(val, 5 , sizeof(val) );            // this will make val[i] = 0 for all i<n;
+
+13) All possible ways of initialisation of STL containers. fill() function :
+
+    >> vector<string> v{"abc","bgcz","hbg"};
+       set<string> s(v.begin(),v.end());
+
+    >> Link : https://www.simplilearn.com/tutorials/cpp-tutorial/how-to-initialize-a-vector-in-cpp
+
+14) we can use SET stl container to extract distinct elements from a given stl container or datastructure.... .
+
+15) Pointers also have call by reference : https://www.onlinegdb.com/online_c++_compiler
+
+      void func(int* &p){
+        int b = 4;
+        p = &b;
+      }
+
+16)
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

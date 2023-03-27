@@ -1,0 +1,14 @@
+>> character variables manipulation and ascii value :   https://www.codechef.com/submit-v2/ENCMSG
+>> to understand precision of numbers(double and fixed): https://www.codechef.com/submit-v2/URCALC
+>> finding exceptional cases in a problem: https://www.codechef.com/submit-v2/DOUBLEDDIST
+>> dynamic allocation of 2d-array and multiplication of 2 matrices    https://www.onlinegdb.com/edit/r8qycctvx
+>> importance of checking overflow of datatypes(int and long long int):  https://www.codechef.com/submit-v2/LIFTME
+>> optimised way of writing gcd function:   https://www.codechef.com/submit-v2/AMSGAME1 (CAN USE INBUILT __gcd(m,n) function     also)
+>> felt that this is important    :  https://www.codechef.com/AUG221C/problems/TWOTRAINS
+>> Understanding binary search    : https://www.codechef.com/problems/SHKNUM
+>> Understanding binary search    : https://www.codechef.com/problems/SQUIRREL
+>> A very good standard problem on binary search : https://practice.geeksforgeeks.org/problems/k-th-element-of-two-sorted-array1317/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=k-th-element-of-two-sorted-array
+>> new vs malloc() and free() vs delete -> https://www.geeksforgeeks.org/new-vs-malloc-and-free-vs-delete-in-c/
+>> A good problem on binary search : https://codeforces.com/problemset/problem/279/B
+>> Felt that this is important : https://leetcode.com/problems/word-search/
+>> a very good problem(RECURSION, DP, BFS) : https://leetcode.com/problems/word-break/description/

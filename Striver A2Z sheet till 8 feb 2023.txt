@@ -1,0 +1,5215 @@
+1) Bubble Sort :
+
+  void bubbleSort(int arr[], int n)
+{
+    int i, j;
+    for (i = 0; i < n - 1; i++)
+ 
+        for (j = 0; j < n - i - 1; j++)
+            if (arr[j] > arr[j + 1])
+                swap(&arr[j], &arr[j + 1]);
+}
+
+2) Selection Sort :
+
+  > At every pass select the minimum from the unsorted subarray and replace it with its first element.
+
+void selectionSort(int arr[], int n)
+{
+    int i, j, min_idx;
+    for (i = 0; i < n-1; i++)
+    {
+        min_idx = i;
+        for (j = i+1; j < n; j++)
+        if (arr[j] < arr[min_idx])
+            min_idx = j;
+
+        if(min_idx!=i)
+            swap(&arr[min_idx], &arr[i]);
+    }
+}
+
+3) Insertion Sort : 
+
+  > At every step insert the current element from unsorted subarray at its right place in the sorted subarray.
+
+void insertionSort(int arr[], int n)
+    {
+        for(int i=1;i<n;i++){
+            int j = i - 1;
+            int temp = arr[i];
+            while(arr[j]>temp && j>=0){
+                arr[j+1] = arr[j];
+                j--;
+            }
+            arr[j+1] = temp;
+        }
+    }
+
+4) Merge Sort :
+
+ > Based on divide and conquer logic and uses recursion.
+
+void merge(int arr[], int l, int m, int r)
+    {
+         
+         int length1 = m - l + 2;
+         int length2 = r - m + 1;
+         int b[length1],c[length2];
+         for(int i=0;i<length1-1;i++){
+             b[i] = arr[l + i];
+         }
+         b[length1-1] = INT_MAX;
+         c[length2-1] = INT_MAX;
+         for(int i=0;i<length2-1;i++){
+             c[i] = arr[m+1+i];
+         }
+         int x=0,y=0;
+         for(int i=l;i<=r;i++){
+             if(b[x]<=c[y]){
+                 arr[i] = b[x];
+                 x++;
+             }
+             else{
+                 arr[i] = c[y];
+                 y++;
+             }
+         }
+    }
+
+    void mergeSort(int arr[], int l, int r)
+    {
+        
+        if(l==r){
+            return;
+        }
+        int mid = (l+r)/2;
+        mergeSort(arr,l,mid);
+        mergeSort(arr,mid+1,r);
+        merge(arr,l,mid,r);
+    }
+
+5) Recursive bubble Sort :
+
+i) 
+
+ void bubbleSort(int arr[], int n)
+{
+    if (n == 1)
+        return;
+ 
+    int count = 0;
+    for (int i=0; i<n-1; i++)
+        if (arr[i] > arr[i+1]){
+            swap(arr[i], arr[i+1]);
+            count++;
+        }
+ 
+      if (count==0)
+           return;
+
+    bubbleSort(arr, n-1);
+} 
+
+ii)
+
+ void bubbleSort(int arr[], int n)
+    {
+        if(n==1){
+            return;
+        }
+        int max = 0;
+        for(int i=0;i<n;i++){
+            if(arr[i]>arr[max]) max = i;
+        }
+        swap(&arr[max],&arr[n-1]);
+        bubbleSort(arr,n-1);
+    }
+
+6) Recursive Insertion Sort:
+
+> Here, the idea is to recursively sort first n-1 elements and then insert the last element in its appropriate place.
+
+void insertionSortRecursive(int arr[], int n)
+{
+    // Base case
+    if (n <= 1)
+        return;
+ 
+    // Sort first n-1 elements
+    insertionSortRecursive( arr, n-1 );
+ 
+    // Insert last element at its correct position
+    // in sorted array.
+    int last = arr[n-1];
+    int j = n-2;
+ 
+    /* Move elements of arr[0..i-1], that are
+    greater than key, to one position ahead
+    of their current position */
+    while (j >= 0 && arr[j] > last)
+    {
+        arr[j+1] = arr[j];
+        j--;
+    }
+    arr[j+1] = last;
+}
+
+7) Quick Sort :
+
+void quickSort(int arr[], int low, int high)
+    {
+        if(low<high){
+           int pivotindex = partition(arr,low,high);
+        quickSort(arr,low,pivotindex-1);
+        quickSort(arr,pivotindex+1,high);    
+        }
+        
+    }
+    
+    int partition (int arr[], int low, int high)
+    {
+       
+       int pivot = arr[low];
+       int start = low+1;
+       int end = high;
+       while(start<=end){
+           while(arr[start]<=pivot && start<=high){
+               start++;
+           }
+           while(arr[end]>pivot && end>=low){
+               end--;
+           }
+           if(start<end){   
+           swap(&arr[start],&arr[end]);
+           }
+       }
+       swap(&arr[end],&arr[low]);
+       return end;
+    }
+
+8) Binary Search :
+
+i) first way to write binary search:
+
+int search(vector<int>& nums, int target) {
+        int low = 0;
+        int high = nums.size()-1;
+        while(high-low>1){
+            int mid = (low+high)/2;
+            if(nums[mid]<=target){
+                low = mid;
+            }
+            else{
+                high = mid - 1;
+            }
+        }
+        if(nums[low]==target) return low;
+        else if(nums[high]==target) return high;
+        else return -1;
+    }
+
+ii) second way to write binary search :
+
+int search(vector<int>& nums,int target){
+        int low=0,high = nums.size()-1;
+        while(low<=high){
+            int mid = (low+high)>>1;
+            if(nums[mid]==target){
+                return mid;
+            }
+            else if(target<nums[mid]){
+                high = mid - 1;
+            }
+            else {
+                low = mid + 1;
+            }
+        }
+        return -1;
+    }
+
+
+9) Q) Find peak element -> https://leetcode.com/problems/find-peak-element/
+
+   ans) To write an algorithm in O(logn) time complexity or for using binary search, one possible way is to reduce the search space by half but by creating the same 
+        conditions as given in the question.
+
+        int findPeakElement(vector<int>& nums) {
+        int low = 0;
+        int n = nums.size();
+        int high = n-1;
+        while(high-low>1){
+            int mid = (low+high)/2;
+            if(nums[mid]<nums[mid+1]){
+                low = mid+1;
+            }
+            else{
+                high = mid;
+            }
+        }
+        if(high == low){
+            return low;
+        }
+        else{
+            if(nums[low]>nums[high]) return low;
+            else return high;
+        }
+    }
+      
+  
+10) Q) Search in rotated sorted array I ->  https://leetcode.com/problems/search-in-rotated-sorted-array/
+    
+   ans) Here to write an algorithm in O(logn) time complexity, we perform 2 binary searches, 1 to find the rotated index and the other to find the target after finding the  
+        rotated index.   
+
+        The somewhat more optimal code would be using only one binary search, where we dont find the rotated index, but analyse on which side the target may lie and 
+        suitably reduce the search space by half.
+
+        int search(vector<int>& a,int target){
+             int low = 0,high = a.size() - 1;
+        while(low<=high){
+              int mid = (low + high)>>1;
+              if(a[mid] == target) return mid;
+               
+              // the left side is sorted
+              if(a[low] <= a[mid]){
+                   // figure out if element lies on left half or not
+                   if(target>=a[low] && target<=a[mid]){
+                            high = mid -1;
+                   }
+                   else{
+                             low = mid+1;
+                   }
+               }
+               // right half is sorted
+               else{
+                     if(target>=a[mid] && target <= a[high]){
+                           low = mid+1;
+                     }
+                     else{
+                           high = mid+1;
+                     }
+              }
+             }
+             return -1;
+         }
+
+
+11)  Q) Search in rotated sorted array II -> https://leetcode.com/problems/search-in-rotated-sorted-array-ii/
+
+     ans) The difference in this problem and the previous problem is that here, there is allowance for duplicates in the array, so it becomes hard when nums[low] == 
+          nums[high] , so for that we check it and increase low by 1 and decrease high by 1 .
+
+     bool search(vector<int>& nums,int target){
+          int low = 0;
+          int n = nums.size();
+          int high = n-1;
+          while(low<=high){
+                int mid = (low+high)>>1;
+                if(nums[mid]==target){
+                    return true;
+                }
+                else if(nums[low]==nums[mid] && nums[low]==nums[high]){
+                    low++;
+                    high--;
+                }
+                else if(nums[mid]<=nums[high]){
+                    if(nums[mid]<target && target<=nums[high]){
+                        low = mid+1;
+                    }
+                    else{
+                        high = mid-1;
+                    }
+                }
+                else{
+                    if(nums[low]<=target && target<nums[mid]){
+                        high = mid-1;
+                    }
+                    else{
+                        low = mid + 1;
+                    }
+                }
+            }
+            return false;
+
+      }
+
+12)  Node* x;
+     x=(Node*)malloc(1*sizeof(Node));       // this creates a node
+
+     Node* x = new Node(data);              // this creates a node and even invokes the comparator function
+
+
+13)  Q) Kth element of two sorted arrays -> https://practice.geeksforgeeks.org/problems/k-th-element-of-two-sorted-array1317/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=k-th-element-of-two-sorted-array
+
+     ans) 
+
+     i) My approach:
+
+      // int bs(int a[],int l,int h,int target){
+    //     if(target<a[l]){
+    //         return l-1;
+    //     }
+    //     else if(target>=a[h]){
+    //         return h;
+    //     }
+    //     else{
+    //         while(h-l>1){
+    //             int mid=(l+h)>>1;
+    //             if(a[mid]<=target){
+    //                 l = mid;
+    //             }
+    //             else{
+    //                 h = mid-1;
+    //             }
+    //         }
+    //         if(a[h]<=target) return h;
+    //         else return l;
+    //     }
+        
+    // }
+    
+    // int kthElement(int a1[], int a2[], int n, int m, int k)
+    // {
+    //     int l1 = 0, l2 = 0, h1 = n-1, h2 = m-1;
+    //     k--;
+    //     while(l1<=h1 && l2<=h2){
+    //         int m1 = (l1+h1)>>1;
+    //         int m2 = (l2+h2)>>1;
+    //         int length1,length2,length;
+    //         if(a1[m1]<a2[m2]){
+    //             int index = bs(a2,l2,h2,a1[m1]);
+    //             length1 = m1-l1+1;
+    //             length2 = index-l2+1;
+    //             length = length1+length2;
+    //             if(length==k+1){
+    //                 return a1[m1];
+    //             }
+    //             else if(length>k+1){
+    //                 h1 = m1-1;
+    //                 h2 = index;
+    //             }
+    //             else{
+    //                 k=k-length;
+    //                 l1 = m1+1;
+    //                 l2 = index+1;
+    //             }
+    //         }
+    //         else{
+    //             int index = bs(a1,l1,h1,a2[m2]);
+    //             length1 = index - l1 + 1;
+    //             length2 = m2 - l2 + 1;
+    //             length = length1 + length2;
+    //             if(length==k+1){
+    //                 return a2[m2];
+    //             }
+    //             else if(length>k+1){
+    //                 h1 = index;
+    //                 h2 = m2-1;
+    //             }
+    //             else{
+    //                 k = k-length;
+    //                 l1 = index+1;
+    //                 l2 = m2+1;
+    //             }
+    //         }
+    //     }
+    //     if(h2<l2){
+    //         return a1[l1+k];
+    //     }
+    //     else{
+    //         return a2[l2+k];
+    //     }
+    // }
+                             
+
+    ii) More optimal approach:
+
+    int kthElement(int arr1[],int arr2[],int n,int m,int k){
+        if(n>m){
+            return kthElement(arr2,arr1,m,n,k);
+        }
+        int low = max(0,k-m), high = min(k,n);
+        while(low<=high){
+            int cut1 = (low+high)>>1;
+            int cut2 = k- cut1;
+            int l1= cut1==0? INT_MIN : arr1[cut1-1];
+            int l2= cut2==0? INT_MIN : arr2[cut2-1];
+            int r1= cut1==n? INT_MAX : arr1[cut1];
+            int r2= cut2==m? INT_MAX : arr2[cut2];
+            
+            if(l1<=r2 && l2<=r1){
+                return max(l1,l2);
+            }
+            else if(l1>r2){
+                high=cut1-1;
+            }
+            else{
+                low = cut1+1;
+            }
+        }
+        return 1;
+    }
+
+
+14) Q) Middle of a LinkedList (TORTOISE HARE METHOD) ->  https://leetcode.com/problems/middle-of-the-linked-list/description/   
+
+    Ans) 
+
+    i) First approach is to first find the length of the list in O(n) time, and then reach the middle element in O(n/2).
+
+      // ListNode* middleNode(ListNode* head) {
+    //     ListNode* start = head, *end = head;
+    //     int count = 1;
+    //     while(end->next != NULL){
+    //         end = end->next;
+    //         count++;
+    //     }
+    //     int x = (count/2);
+    //     while(x--){
+    //         start = start->next;
+    //     }
+    //     return start;
+    // }
+
+
+    ii) Optimal approach is to use TORTOISE HARE METHOD, where we define two pointers slow and fast where the fast pointer moves by 2 nodes and slow pointer moves by 1 
+        node at each step, and the slow pointer points to middle element when the fast pointer reaches last node or crosses it.
+
+        ListNode* middleNode(ListNode* head){
+        ListNode* slow = head, * fast = head;
+        while(fast!=NULL && fast->next!=NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+
+
+15) Q) Reverse a LinkedList  -> https://leetcode.com/problems/reverse-linked-list/description/
+
+
+    ans) 
+
+     i) Iterative approach : In this approach we have 3 pointers prev,head and next , we will suitably reverse the pointers and return head.
+
+      // ListNode* reverseList(ListNode* head) {
+    //     if(head==NULL || head->next == NULL){          // iterative approach
+    //         return head;
+    //     }
+    //     ListNode* p = NULL, *n = head->next;
+    //     while(n!=NULL){
+    //         head->next = p;
+    //         p = head;
+    //         head = n;
+    //         n = n->next;
+    //     }   
+    //     head->next = p;
+    //     return head;
+    // }
+
+    ii) Recursive approach : In this approach we will call the function recursively, by sending an extra parameter prev into the function, and return prev when head==NULL.
+
+    // ListNode* reverseList(ListNode* head,ListNode* p=NULL){
+    //     if(head==NULL){
+    //         return p;                                // recursive approach
+    //     }
+    //     ListNode* n = head->next;
+    //     head->next = p;
+    //     return reverseList(n,head);
+    // }
+
+
+16) Q) Detect a loop in a linked list -> https://leetcode.com/problems/linked-list-cycle/description/             TORTOISE HARE METHOD
+
+    Ans) 
+
+    i) My approach: 
+
+      // bool hasCycle(ListNode *head) {
+    //     map<int,int> m;
+    //     ListNode* temp = head,*prev = NULL,*start = head;
+    //     while(temp!=NULL){
+    //         if(m[temp->val]==0){
+    //             m[temp->val]++;
+    //             prev = temp;
+    //             temp = temp->next;
+    //         }
+    //         else{
+    //             start = head;
+
+    //             while(start!=prev && start!=temp){
+    //                 start = start->next;
+    //             }
+    //             if(start==temp){
+    //                 return true;
+    //             }
+    //             else{
+    //                 prev = temp;
+    //                 temp = temp->next;
+    //             }
+    //         }
+    //     }
+    //     return false;
+    // }
+
+
+   ii) Optimal approach (TORTOISE HARE METHOD) :
+
+      bool hasCycle(ListNode* head){
+        if(head == NULL || head->next == NULL){
+            return false;
+        }
+        ListNode* slow = head, *fast = head;
+        while(fast->next!=NULL && fast->next->next!=NULL){
+            fast=fast->next->next;
+            slow = slow->next;
+            if(fast<=slow){
+                return true;
+            }
+        }
+        return false;
+    }
+
+17) Q) Find the starting point of loop in a Linked List -> https://leetcode.com/problems/linked-list-cycle-ii/description/      TORTOISE HARE METHOD
+
+    Ans) 
+
+    i) First approach: very much similar to the first approach of detect a loop in linked list.
+ 
+    ii) Optimal approach(TORTOISE HARE METHOD) : Here we have that if slow pointer and fast pointer meet, then there exists a loop, but another fact is that if we start
+        a new slow2 pointer from head and move the two slow pointers simultaneously then these two slow pointers meet at the starting of loop.
+
+        we have : 2*(a+b) = a + b + c + b  => we get a = c so when we run two slow pointers, slow1 covers 'c' and slow2 covers 'a' simultaneously and meet at start point.
+
+        ListNode* detectCycle(ListNode * head){
+        if(head==NULL || head->next==NULL){
+            return NULL;
+        }
+        ListNode* slow = head,* fast = head;
+        while(fast->next!=NULL && fast->next->next!=NULL){
+            fast = fast->next->next;
+            slow = slow->next;
+            if(slow==fast){
+                ListNode* ans = head;
+                while(ans!=slow){
+                    ans = ans->next;
+                    slow = slow->next;
+                }
+                return ans;
+            }
+        }
+        return NULL;
+    }
+
+18) Q) Length of loop in linked list -> https://practice.geeksforgeeks.org/problems/find-length-of-loop/1?      utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=find-length-of-loop
+ 
+    Ans) Its simple but it is not straight forward.   
+
+19) Q) Search in a 2D sorted matrix -> https://leetcode.com/problems/search-a-2d-matrix/description/
+
+    >> Basically in the question the matrix given will be such that all its rows are sorted in ascending order and the 
+       last element of a row is smaller than the first element of the next row, i.e the elements are even sorted column wise.
+ 
+    i) first approach is applying binary search :
+            iA) The first way of doing this can be first applying the binary search on rows and find out in which row the 
+                target is. 
+            iB) and the second way of doing is to imagine a virtual 1d array out of this 2D array and apply a binary search 
+                to find the target, NOTE : Here we use matrix[mid/n][mid%n] to reach the element in actual given matrix.
+
+    ii) Second approach is to start from the last element of first row, and increment the row if target is greater than this
+        element and decrement the column if target is less than this element , this way we can reduce the search space until
+        we go out of matrix.
+
+20) Q) Find Peak Element in a 2D matrix -> https://leetcode.com/problems/find-a-peak-element-ii/description/
+
+    Ans) In this question we start with mat[0][0] and at every step we check the four neighbours of the index, if it lies
+         inside the matrix and if it is the greatest among the neighbours, then that is the answer, else we move our index to  
+         the greatest element, in this way we search for a local maximum, which will be found 100%, so we run a while loop of       
+         value true.
+
+21) Q) Check if a linked list is a palindrome or not ->  https://leetcode.com/problems/palindrome-linked-list/
+
+    Ans) i) we can do it by maintaining a stack and checking for palindrome, but it will have O(n) SPACE complexity :
+
+         // bool isPalindrome(ListNode* head) {
+    //     if(head==NULL || head->next == NULL){
+    //         return true;
+    //     }
+    //     ListNode* tail = head;
+    //     int count = 1;
+    //     stack<int> s;
+    //     while(tail->next!=NULL){
+    //         s.push(tail->val);
+    //         tail = tail->next;
+    //         count++;
+    //     }
+    //     s.push(tail->val);
+    //     count/=2;
+    //     tail = head;
+    //     while(count--){
+    //         if(s.top() != tail->val){
+    //             return false;
+    //         }
+    //         s.pop();
+    //         tail = tail->next;
+    //     }
+    //     return true;
+    // }
+
+
+    ii) To do it in O(1) SPACE complexity , we can use the TORTOISE HARE METHOD to find the middle of linked list, then we 
+        reverse the right half of linked list and start another slow pointer from head and check for palindrome. After the 
+        checking we can again reverse the right half of linked list to get the original LL.
+
+     bool isPalindrome(ListNode* head){
+        if(head==NULL || head->next == NULL){
+            return true;
+        }
+        ListNode* slow = head,*fast = head;
+        ListNode* slow2 = head;
+        while(fast->next != NULL && fast->next->next != NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        // reversing the right half of linked list
+        ListNode* prev = NULL, *temp = slow->next, *nxt = slow->next->next;
+        if(nxt!=NULL){
+            while(temp!=NULL){
+                nxt = temp->next;
+                temp->next = prev;
+                prev = temp;
+                temp = nxt;
+            }
+            slow->next = prev;
+        }
+        // checking for palindrome
+        slow = slow->next;
+        while(slow!=NULL){
+            if(slow->val != slow2->val){
+                return false;
+            }
+            slow = slow->next;
+            slow2 = slow2->next;
+        }
+        return true;
+    }
+
+22) Q) Segregate odd and even nodes in Linked List -> https://leetcode.com/problems/odd-even-linked-list/description/
+                
+    Ans) Simply have a temp1 pointed to odd starting and temp2 pointed to even starting, and run a while loop while all the
+         odd nodes are covered and in the loop just connect all the odd nodes, inside the loop simultaneously connect the 
+         corresponding even nodes and then after the execution of loop ensure that the 'next' of last even node is connected 
+         to NULL and then connect the last odd node to the first even node.
+
+         ListNode* oddEvenList(ListNode* head) {
+        if(head==NULL || head->next==NULL || head->next->next==NULL){
+            return head;
+        }
+        ListNode* temp1 = head, *temp2 = head->next, *nxt1=NULL, *nxt2=NULL;
+        ListNode* temphead = head->next;
+        while(temp1->next!=NULL && temp1->next->next!=NULL){
+            nxt1 = temp1->next->next;
+            temp1->next = nxt1;
+            temp1 = nxt1;
+            if(temp2->next!=NULL && temp2->next->next != NULL){
+                nxt2 = temp2->next->next;
+                temp2->next = nxt2;
+                temp2 = nxt2;
+            }
+        }
+        temp2->next = NULL;
+        temp1->next = temphead;
+        return head;
+    }
+
+23) Q) Remove Nth node from end in a linked list ->  https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
+
+    Ans) 
+
+    i) my approach :
+        
+     // ListNode* removeNthFromEnd(ListNode* head, int n) {
+    //     if(head==NULL || head->next == NULL){
+    //         return NULL;
+    //     }
+    //     ListNode* slow = head,* fast = head,* prev = NULL;
+    //     int count = 1,length;
+    //     while(fast->next!=NULL && fast->next->next!=NULL){
+    //         prev = slow;
+    //         fast = fast->next->next;
+    //         slow = slow->next;
+    //         count++;
+    //     }
+    //     if(fast->next==NULL) length = 2*count - 1;
+    //     else length = 2*count;
+    //     length = length + 1 - n;
+    //     length = length-count;
+    //     if(length<0){
+    //        slow = head;
+    //        count = count + length -1;
+    //        while(count>0){
+    //            prev = slow;
+    //            slow = slow->next;
+    //            count--;
+    //        }
+    //        if(slow==head){
+    //         head = head->next;
+    //         slow->next = NULL;
+    //         return head;
+    //        }
+    //        prev->next = slow->next;
+    //        slow->next = NULL;
+    //        return head;
+    //     }
+    //     else{
+    //         while(length>0){
+    //         prev = slow;
+    //         slow = slow->next;
+    //         length--;
+    //         }
+    //        if(slow==head){
+    //         head = head->next;
+    //         slow->next = NULL;
+    //         return head;
+    //        }
+    //        prev->next = slow->next;
+    //        slow->next = NULL;
+    //        return head;
+    //     }
+    // }
+
+   ii) optimal approach : TRY TO THINK IN THIS LOGICAL WAY IN CASE OF LINKED LIST PROBLEMS
+
+   ListNode* removeNthFromEnd(ListNode* head,int n){
+        ListNode* start = new ListNode();
+        start->next = head;
+        ListNode* fast = start;
+        ListNode* slow = start;
+
+        for(int i=1;i<=n;i++){
+            fast= fast->next;
+        }
+
+        while(fast->next != NULL){
+            fast = fast->next;
+            slow = slow->next;
+        }
+        slow->next = slow->next->next;
+        return start->next;
+    }
+
+
+24) CREATING A NODE :  
+
+     i) Node* temp;
+        temp=(Node*)calloc(1,sizeof(Node));
+        temp->data = x;
+
+    ii) Node* temp = new Node(x);
+
+    Both the things are same, if we use 'new' keyword, then the data is initialised according to the comparator function, but if we do normal
+    dynamic allocation then we need to do it ourselves.
+
+
+25) new vs malloc() and free() vs delete -> https://www.geeksforgeeks.org/new-vs-malloc-and-free-vs-delete-in-c/
+
+    >> the difference between new and malloc() is that when we use malloc() just the memory is allocated to the pointer, but if we use new keyword, memory is allocated
+       and the constructor of the class or structure is also called to initialise the value of pointer.
+    >> difference between delete and free() is also that when we use free() only the value or memory given to pointer is freed but when we use delete keyword, memory is
+       deallocated and also the destructor of class is called.
+    >> Other important point is free() and delete do not destroy the pointer, they destroy the memory allocated to that pointer, so there is no need to declare the pointer
+       again after using delete or free().
+
+26) Q) sorting 0's,1's and 2's in a linked list -> https://practice.geeksforgeeks.org/problems/given-a-linked-list-of-0s-1s-and-2s-sort-it/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=given-a-linked-list-of-0s-1s-and-2s-sort-it
+
+    Ans) Here just create three 'new' dummy nodes as zerodum, onedum and twodum then traverse over the linked list given using a temp. Maintain a m[0],m[1] and m[2]
+         pointers pointing to the zerodum,... respectively, ......
+
+         Node* segregate(Node *head) {
+        
+        // Add code here
+        if(head==NULL || head->next == NULL){
+            return head;
+        }
+        Node *zerodum = new Node(0);
+        Node *onedum = new Node(0);
+        Node *twodum = new Node(0);
+        Node* temp = head, *m[3];
+        m[0] = zerodum, m[1]=onedum,m[2]=twodum;
+        while(temp!=NULL){
+            int x=temp->data;
+            m[x]->next = temp;
+            m[x] = temp;
+            temp = temp->next;
+            m[x]->next = NULL;
+        }
+        m[1]->next = twodum->next;
+        m[0]->next = onedum->next;
+        onedum->next = NULL;
+        twodum->next = NULL;
+        return zerodum->next;
+    }
+
+27) Q) Intersection of two linked lists -> https://leetcode.com/problems/intersection-of-two-linked-lists/description/
+
+    Ans) 
+
+     i) My appraoch : 
+
+
+        // ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    //     ListNode* tempB = headB;
+    //     int c;
+    //     int x1=0,x2=0,x3=0;
+    //     while(tempB!=NULL){
+    //         tempB = tempB->next;
+    //         x1++;
+    //     }
+    //     ListNode* tempA = headA, *prevA = NULL, *nxtA = NULL;
+    //     while(tempA!=NULL){
+    //         nxtA = tempA->next;
+    //         tempA->next = prevA;
+    //         prevA = tempA;
+    //         tempA = nxtA;
+    //         x2++;
+    //     }
+    //     tempB = headB;
+    //     while(tempB!=NULL){
+    //         tempB = tempB->next;
+    //         x3++;
+    //     }
+    //     c = (x1+x2-x3+1)/2;
+    //     int b = (x1+x3-x2-1)/2;
+    //     ListNode* tempans = headB;
+    //     while(b-- && tempans!=NULL){
+    //         tempans = tempans->next;
+    //     }
+    //     tempA = prevA;
+    //     prevA = NULL;
+    //     ListNode* ans;
+    //     while(tempA!=NULL){
+    //         nxtA= tempA->next;
+    //         tempA->next = prevA;
+    //         prevA = tempA;
+    //         tempA = nxtA;
+    //         c--;
+    //         if(c==0) ans = prevA;
+    //     }
+    //     if(tempans!=ans) return NULL;
+    //     return ans;
+    // }
+
+
+    ii) Optimal approach :
+
+     >> My code to optimal approach :                                                                                        
+
+        // ListNode* getIntersectionNode(ListNode* headA,ListNode*headB){                                    
+    //     ListNode* dum1 = headA, *dum2 = headB;
+    //     while(dum1!=NULL && dum2!=NULL){
+    //         if(dum1==dum2){
+    //             return dum1;
+    //         }
+    //         dum1 = dum1->next;
+    //         dum2 = dum2->next;
+    //     }
+    //     if(dum1==NULL){
+    //         dum1 = headB;
+    //         while(dum2!=NULL){
+    //             dum1=dum1->next;
+    //             dum2=dum2->next;
+    //         }
+    //         dum2 = headA;
+    //         while(dum1!=dum2 && dum1!=NULL && dum2!=NULL){
+    //             dum1 = dum1->next;
+    //             dum2 = dum2->next;
+    //         }
+    //         if(dum1!=NULL)
+    //         return dum1;
+    //         return NULL;
+    //     }
+    //     else{
+    //         dum2 = headA;
+    //         while(dum1!=NULL){
+    //             dum1 = dum1->next;
+    //             dum2 = dum2->next;
+    //         }
+    //         dum1 = headB;
+    //         while(dum1!=dum2 && dum1!=NULL && dum2!=NULL){
+    //             dum1 = dum1->next;
+    //             dum2 = dum2->next;
+    //         }
+    //         if(dum1!=NULL)
+    //         return dum1;
+    //         return NULL;
+    //     }
+    // }
+
+    >> Optimal code to Optimal approach : 
+    
+       ListNode* getIntersectionNode(ListNode* headA,ListNode* headB){
+        if(headA==NULL || headB==NULL) return NULL;
+        ListNode* dum1 = headA, *dum2 = headB;
+        while(dum1!=dum2){
+            dum1 = dum1==NULL ? headB : dum1->next;
+            dum2 = dum2==NULL ? headA : dum2->next;
+        } 
+        return dum1;
+    }
+
+
+28) Q) Sort a Stack using recursion -> https://practice.geeksforgeeks.org/problems/sort-a-stack/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=sort-a-stack
+
+    Ans) 
+
+    void insertt(int x,stack<int>& s){
+    if(s.empty()){
+        s.push(x);
+        return;
+    }
+    if(x>=s.top()) s.push(x);
+    else{
+        int y = s.top();
+        s.pop();
+        insertt(x,s);
+        s.push(y);
+    }
+}
+
+void SortedStack :: sort()
+{
+   //Your code here
+   if(s.empty()) return;
+   int x = s.top();
+   s.pop();
+   sort();
+   insertt(x,s);
+}
+
+
+29) Q) Reverse a Stack using recursion -> https://practice.geeksforgeeks.org/problems/reverse-a-stack/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=reverse-a-stack
+
+   Ans) 
+        void insertt_bottom(int x,stack<int>& st){
+        if(st.empty()){
+            st.push(x);
+            return;
+        }
+        int y = st.top();
+        st.pop();
+        insertt_bottom(x,st);
+        st.push(y);
+    }
+     
+    void Reverse(stack<int> &st){
+        if(st.empty()) return;
+        int x = st.top();
+        st.pop();
+        Reverse(st);
+        insertt_bottom(x,st);
+    }
+
+30) Q) Generate all binary strings -> https://practice.geeksforgeeks.org/problems/generate-all-binary-strings/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=generate-all-binary-strings
+
+    Ans) 
+  
+    i) iterative approach : 
+  
+       // void generateBinaryStrings(int& n){
+        
+    //     int num = 1<<n;
+    //     for(int j=0;j<num;j++){
+    //         int x = 0,y=0;
+    //     string s = "";
+    //     for(int i=n-1;i>=0;i--){
+    //         if((j>>i)&1 == 1){
+    //             s.push_back('1');
+    //             if(x==0) x = 1;
+    //             else if(x==1){
+    //                 y = 1;
+    //                 break;
+    //             }
+    //         }
+    //         else{
+    //             s.push_back('0');
+    //             x = 0;
+    //         }
+    //     }
+    //     if(!y){
+    //         cout<<s<<" ";
+    //     }
+    //     }
+    // }
+
+    ii) recursive approach : 
+
+        public:
+    void helper(string str, int i, int prev, int n){
+        if(i==n){
+           cout << str << " ";
+           return;
+        }
+        
+        if(prev==-1){
+            helper(str+'0',i+1,0,n);
+            helper(str+'1',i+1,1,n);
+        }
+        else if(prev==0){
+            helper(str+'0',i+1,0,n);
+            helper(str+'1',i+1,1,n);
+        }
+        else {
+             helper(str+'0',i+1,0,n);
+        }
+    }
+    
+    void generateBinaryStrings(int& num){
+        int i = 0;
+        int n = num;
+        helper("",i,-1,n);
+    }
+
+31) Q) Generate paranthesis ->  https://leetcode.com/problems/generate-parentheses/description/
+
+   Ans) 
+
+        i) My recursive approach :
+
+        void generate(int o,int c,vector<string>& v,int& n,string s){
+        if(o==n){
+           int x = o - c;
+           while(x--){
+               s.push_back(')');
+           }
+           v.push_back(s);
+        }
+        else if(o-c==0){
+           s.push_back('(');
+           o++;
+           generate(o,c,v,n,s);
+        }
+        else{
+            s.push_back('(');
+            o++;
+            generate(o,c,v,n,s);
+            s.pop_back();
+            o--;
+            s.push_back(')');
+            c++;
+            generate(o,c,v,n,s);
+        }
+    }
+
+    vector<string> generateParenthesis(int n) {
+        vector<string> v;
+        int o = 0,c = 0;
+        string s="";
+        generate(o,c,v,n,s);
+        return v;
+    }
+
+    ii) Closure Number approach : // JAVA code
+
+       class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList();
+        if (n == 0) {
+            ans.add("");
+        } else {
+            for (int c = 0; c < n; ++c)
+                for (String left: generateParenthesis(c))
+                    for (String right: generateParenthesis(n-1-c))
+                        ans.add("(" + left + ")" + right);
+        }
+        return ans;
+    }
+}
+
+
+32) Q) Print all subsequences/ Power Set -> https://leetcode.com/problems/subsets/description/
+
+   Ans) 
+
+     i) Using recursion : 
+
+         void generate(vector<int>& nums,vector<vector<int>>& ans,vector<int> v,int index){
+        if(index == nums.size()) return;
+        generate(nums,ans,v,index+1);
+        v.push_back(nums[index]);
+        ans.push_back(v);
+        generate(nums,ans,v,index+1);
+    }
+
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> ans;
+        int index = 0;
+        vector<int> v;
+        ans.push_back(v);
+        generate(nums,ans,v,index);
+        return ans;
+    }
+
+
+   ii) Using bit manipulation : 
+
+       vector<vector<int>> subsets(vector<int>& nums){
+        vector<vector<int>> ans;
+        int n = nums.size();
+        for(int i=0;i<(1<<n);i++){
+            vector<int> v;
+            for(int j=0;j<n;j++){
+                if((i>>j)&1 == 1){
+                    v.push_back(nums[j]);
+                }
+            }
+            ans.push_back(v);
+        }
+        return ans;
+    }
+    
+
+33) Q) check if the array is sorted -> https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/description/
+
+   Ans) 
+
+      i) My approach : 
+
+         bool check(vector<int>& nums) {
+        int x=0,n=nums.size();
+        if(n==1) return true;
+        int i = 0, j = n-1;
+        while(nums[i]==nums[j]){
+            i++;
+            j--;
+            if(i>=j){
+                return true;
+            }
+        }
+        for(int k=i+1;k<=j;k++){
+            if(nums[k-1]>nums[k]) x++;
+        }
+        if(nums[i]<nums[j] && x==0) return true;
+        else if(nums[i]>nums[j] && x==1) return true;
+        return false; 
+    }
+
+   ii) Optimal approach : 
+
+       bool check(vector<int>& nums) {
+        int first = nums[0];
+        bool rotated = false;
+        for (int i = 1; i < nums.size(); ++i) {
+            if (rotated && nums[i] > first) return false;
+            if (nums[i] >= nums[i - 1]) continue;
+            if (rotated) return false;
+            rotated = true;
+        }
+        return true;
+    }
+
+
+34) Q) Subset sum Problem -> https://practice.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1        (USING DYNAMIC PROGRAMMING)
+
+    Ans) 
+         i) The recursive way which dont work because of higher time complexity :
+
+            class Solution{   
+public:
+
+    bool solve(vector<int> arr,int sum,int n){
+        if(sum==0){
+            return true;
+        }
+        if(n==0){
+            return false;
+        }
+        else{
+            bool no,yes;
+            no = solve(arr,sum,n-1);
+            if(arr[n-1]<=sum){
+                yes = solve(arr,sum-arr[n-1],n-1);
+            }
+            else{
+                yes = false;
+            }
+            if(no==true || yes==true){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+
+    bool isSubsetSum(vector<int>arr, int sum){
+        // code here 
+        int n = arr.size();
+        return solve(arr,sum,n);
+        
+    }
+};
+
+         ii) Recursion followed by memoization (works) : and iii) Tabulation method : (The commented code is memoization way and the uncommented is the tabulated method) :
+            
+              // const int N = 1e5 + 2;
+    // int dp[102][N];
+class Solution{   
+public:
+
+    // bool solve(vector<int> arr,int sum,int n){
+    //     if(sum==0){
+    //         dp[n][sum] = 1;
+    //         return true;
+    //     }
+    //     if(n==0){
+    //         dp[n][sum]=0;
+    //         return false;
+    //     }
+    //     if(dp[n][sum]!=-1){
+    //         return dp[n][sum];
+    //     }
+    //     else{
+    //         bool no,yes;
+    //         if(dp[n-1][sum]==-1){
+    //             dp[n-1][sum] = solve(arr,sum,n-1);
+    //         }
+    //         no = dp[n-1][sum];
+    //         if(arr[n-1]<=sum){
+    //             if(dp[n-1][sum-arr[n-1]] == -1){
+    //             dp[n-1][sum-arr[n-1]] = solve(arr,sum-arr[n-1],n-1);
+    //             }
+    //              yes = dp[n-1][sum-arr[n-1]];
+    //         }
+    //         else{
+    //             yes = false;
+    //         }
+    //         if(no==true || yes==true){
+    //             dp[n][sum] = 1;
+    //             return true;
+    //         }
+    //         else{
+    //             dp[n][sum] = 0;
+    //             return false;
+    //         }
+    //     }
+    // }
+
+    bool isSubsetSum(vector<int>arr, int sum){
+        // code here 
+        // int n = arr.size();
+        // memset(dp,-1,sizeof(dp));
+        // return solve(arr,sum,n);
+        int n = arr.size();
+        int N = 1e5 + 2;
+        int dp[n+1][sum+1];
+        for(int j=1;j<=sum;j++){
+            dp[0][j] = 0;
+        }
+        for(int i=0;i<=n;i++){
+            dp[i][0] = 1;
+        }
+        for(int i=1;i<n+1;i++){
+            for(int j=1;j<sum+1;j++){
+                int yes,no;
+                if(arr[i-1]<=j){
+                    yes = dp[i-1][j-arr[i-1]];
+                    // dp[i][j] = (dp[i-1][j-arr[i-1]]) || (dp[i-1][j]);
+                }
+                else{
+                    yes = 0;
+                    // dp[i][j] = dp[i-1][j];
+                }
+                no = dp[i-1][j];
+                dp[i][j] = (yes || no);
+            }
+        }
+        return dp[n][sum];
+    }
+};
+            
+
+35) Q) Perfect sum problem -> https://practice.geeksforgeeks.org/problems/perfect-sum-problem5633/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=perfect-sum-problem
+
+
+    Ans) IN this question we feel that sum==0 return 1; as a base condition but that is true only if 1<=arr[i], but in the question we have 0<= arr[i]
+
+        i) Recursion followed by memoization method : IN THIS MAKE NOTE OF dp.assign() function to initialise a vector<vector<int>> dp.
+
+        ii) Tabulation method : 
+
+        class Solution{
+   
+	public:
+	int M = 1e9 + 7;
+// 	vector<vector<int>> dp;
+	
+// 	int mysolution(int arr[],int n,int sum){
+// 	   // if(sum==0){
+// 	   //     return 1;          // this is wrong base condition
+// 	   // }
+// 	    if(n==0){
+// 	        if(sum==0) return 1;
+// 	        return 0;
+// 	    }
+// 	    if(dp[n][sum]!=-1){
+// 	        return dp[n][sum];
+// 	    }
+// 	    long long int r;
+// 	    if(arr[n-1]<=sum){
+// 	        if(dp[n-1][sum-arr[n-1]] == -1){
+// 	            dp[n-1][sum-arr[n-1]] = mysolution(arr,n-1,sum-arr[n-1]);
+// 	        }
+// 	        r = dp[n-1][sum-arr[n-1]];
+// 	    }
+// 	    else{
+// 	        r = 0;
+// 	    }
+// 	    long long int l;
+// 	    if(dp[n-1][sum] == -1){
+// 	        dp[n-1][sum] = mysolution(arr,n-1,sum);
+// 	    }
+// 	    l = dp[n-1][sum];
+// 	    dp[n][sum] = (l+r)%M;
+// 	    return dp[n][sum];
+// 	}
+	
+	int perfectSum(int arr[], int n, int sum)
+	{
+        // Your code goes here
+        // dp.assign(n+1,vector<int> (sum+1,-1));
+        // memset(dp,-1,sizeof(dp));
+        // return mysolution(arr,n,sum); 
+        int dp[n+1][sum+2];
+        for(int j=1;j<=sum;j++){
+            dp[0][j] = 0;
+        }
+        dp[0][0] = 1;
+        for(int i=1;i<=n;i++){
+            for(int j=0;j<=sum;j++){
+                long long int r,l;
+                if(arr[i-1]<=j){
+                    r = dp[i-1][j-arr[i-1]];
+                }
+                else{
+                    r = 0;
+                }
+                l = dp[i-1][j];
+                dp[i][j] = (l+r)%M;
+            }
+        }
+        return dp[n][sum];
+	}
+	  
+};
+
+
+36) Better ways of using recursion -> https://www.youtube.com/watch?v=eQCS_v3bw0Q&list=PLgUwDviBIf0rGlzIn_7rsaR2FQ5e6ZOL9&index=8
+
+    i) If like we have to print all the subsequences with sum of elements equal to sum : We basically have our function to be of void type, and then in the base condition,
+                                                                                         if the condition is satisfied we will print the path or the elements in that 
+                                                                                         particular subsequence.
+
+    ii) If like we have to print only and any one subsequence with sum of eleme....    : We basically use the function with boolean return type, and in the base condition,
+                                                                                         if the condition is satisfied we will print that one subsequence and return true                    
+                                                                                         and else return a false. so when - 
+                                                                                         ever we are doing a recursive call we will check if it is true, if it is true it 
+                                                                                         means i have got my answer and no need of any further recursion calls, hence i
+                                                                                         return a true, this way i will check for both the recursive calls without and with
+                                                                                         considering the current element. and if none of them return a true, i will return 
+                                                                                         a false.
+
+   iii) If like we have to check whether there exists any subsequence with sum of elem..:  Here it is same like the just above case, but here we no need to print that 
+                                                                                           one subsequence when the base condition is satisfied.
+
+   iv) If we are asked to find the count of number of subsequences with sum of elem.... : Here we will use the function with int return type, and in the base condition 
+                                                                                          if condition is satisfied, we will return 1, else return 0. And whenever we are
+                                                                                          doing the recursive calls we store it in two integer variables say 'l' and 'r'
+                                                                                          then return (l+r) , which is the total count of required subsequences.
+             
+
+
+37) Q) Combination Sum -> https://leetcode.com/problems/combination-sum/description/
+
+    Ans) 
+
+        i) My Recursion Solution : 
+
+           vector<vector<int>> ans;
+
+    void mysolution(vector<int>& candidates,int target,int ind,vector<int> v){
+        if(target==0){
+            ans.push_back(v);
+            return;
+        }
+        if(ind == candidates.size()){
+            return;
+        }
+        mysolution(candidates,target,ind+1,v);
+        int q = (target/candidates[ind]);
+        for(int i=1;i<=q;i++){
+           v.push_back(candidates[ind]);
+           mysolution(candidates,target-(candidates[ind]*i),ind+1,v);
+        }
+        return;
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int> v;
+        int ind = 0;
+        mysolution(candidates,target,ind,v);
+        return ans;
+    }
+
+    ii) Strivers Recursive solution :
+
+        void findCombination(int ind,int target,vector<int> & arr, vector<vector<int>>& ans,vector<int>& ds){
+        if(ind == arr.size()){
+            if(target==0){
+            ans.push_back(ds);
+            }
+            return;
+        }
+        // pick up an element
+        if(arr[ind] <= target){
+            ds.push_back(arr[ind]);
+            findCombination(ind,target-arr[ind],arr,ans,ds);
+            ds.pop_back();
+        }
+        findCombination(ind+1,target,arr,ans,ds);
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates,int target){
+        vector<vector<int>> ans;
+        vector<int> ds;
+        findCombination(0,target,candidates,ans,ds);
+        return ans;
+    }
+
+38) Q) Combination sum II -> https://leetcode.com/problems/combination-sum-ii/description/          (SELECTING SUBSETS WITHOUT DUPLICATES)
+
+    Ans) 
+
+        i) My Recursive approach : 
+
+           vector<vector<int>> ans;
+
+    void mysolution(vector<int>& candidates,int target,int ind,vector<int> v,map<int,int> m){
+        if(target==0){
+            ans.push_back(v);
+            return;
+        }
+        if(ind == candidates.size()){
+            return;
+        }
+        mysolution(candidates,target,ind+1,v,m);
+        for(int i=1;i<=m[candidates[ind]];i++){
+            if(candidates[ind]*i <= target){
+            v.push_back(candidates[ind]);
+            mysolution(candidates,target - i*candidates[ind],ind+1,v,m);
+            }
+        }
+        return;
+    }
+
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<int> v;
+        map<int,int> m;
+        vector<int> modify;
+        for(int i=0;i<candidates.size();i++){
+            if(m[candidates[i]] == 0){
+                modify.push_back(candidates[i]);
+            }
+            m[candidates[i]]++;
+        }
+        int ind = 0;
+        mysolution(modify,target,ind,v,m);
+        return ans;
+    }
+
+  ii) Striver's Recursive Approach :
+
+      void findCombination(int ind,int target,vector<int>& arr,vector<vector<int>>& ans,vector<int>& ds){
+        if(target==0){
+            ans.push_back(ds);
+            return;
+        }
+        for(int i=ind;i<arr.size();i++){
+            if(i>ind && arr[i]==arr[i-1]) continue;
+            if(arr[i]>target) break;
+            ds.push_back(arr[i]);
+            findCombination(i+1,target - arr[i],arr,ans,ds);
+            ds.pop_back();
+        }
+    }
+
+    vector<vector<int>> combinationSum2(vector<int>& candidates,int target){
+        sort(candidates.begin(),candidates.end());
+        vector<vector<int>> ans;
+        vector<int> ds;
+        findCombination(0,target,candidates,ans,ds);
+        return ans;
+    }
+
+   
+39) Q) Subset Sum I ->  https://practice.geeksforgeeks.org/problems/subset-sums2234/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=subset-sums
+
+    Ans) 
+
+        i) My recursive approach :
+
+
+        void mysolution(vector<int>& arr,int n,vector<int>& ans,int sum){
+        if(n==0){
+            ans.push_back(sum);
+            return;
+        }
+        mysolution(arr,n-1,ans,sum);
+        mysolution(arr,n-1,ans,sum+arr[n-1]);
+        return;
+    }
+
+    vector<int> subsetSums(vector<int> arr, int N)
+    {
+        // Write Your Code here
+        vector<int> ans;
+        mysolution(arr,N,ans,0);
+        return ans;
+    }   
+
+40) Q) Subset sum II -> https://leetcode.com/problems/subsets-ii/description/              (SELECTING SUBSETS WITHOUT DUPLICATES)
+
+    Ans) 
+
+        i) My recursive approach : 
+
+        void mysolution(vector<int>& nums,vector<vector<int>>& ans,int ind,vector<int> v){
+        ans.push_back(v);
+        for(int i=ind;i<nums.size();i++){
+           if(i>ind && nums[i]==nums[i-1]) continue;
+           v.push_back(nums[i]);
+           mysolution(nums,ans,i+1,v);
+           v.pop_back();
+        }
+        return;
+    }
+ 
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> ans;
+        sort(nums.begin(),nums.end());
+        vector<int> v;
+        mysolution(nums,ans,0,v);
+        return ans;
+    }
+
+
+41) ****** (DIFFERENCE BETWEEN SUBARRAY, SUBSEQUENCE AND A SUBSET) ******
+
+Ans) A subarray is a contiguous part of array and maintains relative ordering of elements. For an array/string of size n, there are n*(n+1)/2 non-empty subarrays/substrings.
+
+A subsequence maintain relative ordering of elements but may or may not be a contiguous part of an array. For a sequence of size n, we can have 2^n-1 non-empty sub-sequences in total.
+
+A subset MAY NOT maintain relative ordering of elements and can or cannot be a contiguous part of an array. For a set of size n, we can have (2^n) sub-sets in total.
+
+Some interesting observations :
+
+Every Subarray is a Subsequence.
+Every Subsequence is a Subset.
+
+42) ****** (SELECTING SUBSETS WITHOUT DUPLICATES) *******   // this doesn't work for selecting subsequences without duplicates.
+
+Ans)  first we sort the given input array.
+
+      > https://www.youtube.com/watch?v=G1fRTGRxXU8&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=51
+      > https://www.youtube.com/watch?v=RIn3gOkbhQE&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=54
+      > https://leetcode.com/problems/combination-sum-iii/description/
+
+
+43) Q) Combination Sum III -> https://leetcode.com/problems/combination-sum-iii/description/
+
+   Ans) i) My recursive approach : 
+
+        void mysolution(int ind,int num,int sum,vector<vector<int>>& ans,int k,int n,vector<int> v){
+        if(ind==k+1){
+            if(sum == n){
+               ans.push_back(v);
+               return;
+            }
+            return;
+        }
+        for(int i=num;i<=(9-k+ind);i++){
+            if(i>n-sum){
+               break;
+            }
+            v.push_back(i);
+            mysolution(ind+1,i+1,sum+i,ans,k,n,v);
+            v.pop_back();
+        }
+        return;
+    }
+  
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> ans;
+        vector<int> v;
+        mysolution(1,1,0,ans,k,n,v);
+        return ans;
+    }
+
+
+44) Q) Letter combinations of a phone number -> https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/
+
+    Ans) i) My recursive approach : 
+
+         void mysolution(string& digits,vector<string>& ans,string s[],int ind,string temp){
+        if(digits.size()==0) return;
+        if(ind == digits.size()){
+            ans.push_back(temp);
+            return;
+        }
+        for(auto charac : s[digits[ind]-48]){
+            temp.push_back(charac);
+            mysolution(digits,ans,s,ind+1,temp);
+            temp.pop_back();
+        }
+        return;
+    }
+
+    vector<string> letterCombinations(string digits) {
+        string s[10];
+        s[2] = "abc";s[3]="def";s[4]="ghi";s[5]="jkl";s[6]="mno";s[7]="pqrs",s[8]="tuv";s[9]="wxyz";
+        vector<string> ans;
+        string temp;
+        mysolution(digits,ans,s,0,temp);
+        return ans;
+    }
+
+45)  Q) Palindrome partitioning -> https://leetcode.com/problems/palindrome-partitioning/
+
+     Ans) 
+
+         i) My recursive approach : 
+ 
+           // bool checkPalindrom(string s){
+    //     for(int i = 0 ;i<(s.size()/2);i++){
+    //        if(s[i]!=s[s.size()-1-i]) return false;
+    //     }
+    //     return true;
+    // }
+
+    // void mysolution(string& s,int prevp,int currp,vector<vector<string>>& ans,vector<string> temp){
+    //     if(currp==s.size()-1){
+    //         return;
+    //     }
+    //     // not considering the partition
+    //     mysolution(s,prevp,currp+1,ans,temp);
+    //     // considering the partition
+    //     string a = s.substr(prevp+1,currp-prevp);
+    //     string b = s.substr(currp+1);
+    //     prevp = currp;
+    //     if(checkPalindrom(a)){
+    //        if(!temp.empty()){
+    //         temp.pop_back();
+    //        }
+    //        temp.push_back(a);
+    //        temp.push_back(b);
+    //        if(checkPalindrom(b)){
+    //            ans.push_back(temp);
+    //        }
+    //        mysolution(s,prevp,currp+1,ans,temp);
+    //     }
+    //     return;
+    // }
+
+    // vector<vector<string>> partition(string s) {
+    //     vector<vector<string>> ans;
+    //     vector<string> temp;
+    //     int prevp = -1;
+    //     int currp = 0;
+    //     mysolution(s,prevp,currp,ans,temp);
+    //     if(checkPalindrom(s)){
+    //         temp.push_back(s);
+    //         ans.push_back(temp);
+    //     }
+    //     return ans;
+    // }
+
+    ii) Striver's recursive approach : 
+
+     vector<vector<string>> partition(string s){
+        vector<vector<string>> res;
+        vector<string> path;
+        func(0,s,path,res);
+        return res;
+    }
+
+    void func(int index,string s,vector<string>& path,vector<vector<string>>& res){
+        if(index==s.size()){
+            res.push_back(path);
+            return;
+        }
+        for(int i=index;i<s.size();i++){
+            if(isPalindrome(s,index,i)){
+                path.push_back(s.substr(index,i-index+1));
+                func(i+1,s,path,res);
+                path.pop_back();
+            }
+        }
+    }
+    bool isPalindrome(string s,int start,int end){
+        while(start<=end){
+            if(s[start++]!=s[end--]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+46) Q) Word Search ->  https://leetcode.com/problems/word-search/
+
+    Ans) i) My Solution :
+
+          bool helper(int ind,int pos,vector<vector<char>>& board,string& word,vector<vector<int>> check){
+        if(ind == word.size()){
+            return true;
+        }
+        int n = board.size();
+        int m = board[0].size();
+        pair<int,int> p[4] = {{0,-1},{0,1},{-1,0},{1,0}};
+        int arr[4] = {pos-1,pos+1,pos-m,pos+m};
+        vector<int> start;
+        for(int i=0;i<4;i++){
+            int x = (pos/m)+p[i].first;
+            int y = (pos%m)+p[i].second;
+            if(x>=0 && x<n && 0<=y && y<m){
+            if((board[x][y] == word[ind]) && check[x][y]==0){
+                start.push_back(arr[i]);
+            }
+            }
+        }
+        if(start.size()==0) return false;
+        else{
+            for(int i=0;i<start.size();i++){
+                check[start[i]/m][start[i]%m] = 1;
+                if(helper(ind+1,start[i],board,word,check)) return true;
+                check[start[i]/m][start[i]%m] = 0;
+            }
+            return false;
+        }
+    }
+ 
+    bool exist(vector<vector<char>>& board, string word) {
+        int n = board.size();
+        int m = board[0].size();
+        vector<int> start;
+        int* freq = new int[125];
+        for(int i=0;i<word.size();i++){
+            freq[word[i]]++;
+        }
+        int low = 0,high = word.size()-1;
+        while(low<high && (freq[word[low]] == freq[word[high]])){
+            low++;
+            high--;
+        }
+        if(low<high && (freq[word[high]] < freq[word[low]])){
+            reverse(word.begin(),word.end());
+        }
+        int k = -1;
+        vector<vector<int>> check(n, vector<int> (m,0));
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                k++;
+                if(word[0]==board[i][j]){
+                    start.push_back(k);
+                }
+            }
+        }
+        for(int i=0;i<start.size();i++){
+            check[start[i]/m][start[i]%m] = 1;
+            if(helper(1,start[i],board,word,check)) return true;
+            check[start[i]/m][start[i]%m] = 0;
+        }
+        return false;
+    } 
+
+47) ***** BFS AND DFS *****
+
+Ans)  
+
+   BFS : 
+
+        vector<int> bfsOfGraph(int V, vector<int> adj[]) {
+        // Code here
+        int vis[V] = {0};
+        vis[0] = 1;
+        queue<int> q;
+        q.push(0);
+        vector<int> bfs;
+        while(!q.empty()){
+            int x = q.front();
+            bfs.push_back(x);
+            q.pop();
+            for(int i=0;i<adj[x].size();i++){
+                if(!vis[adj[x][i]]){
+                    q.push(adj[x][i]);
+                    vis[adj[x][i]] = 1;
+                }
+            }
+        }
+        return bfs;
+    }
+
+    Time complexity of BFS :  O(N) + O(2E), Where N = Nodes, 2E is for total degrees as we traverse all adjacent nodes.
+    Space complexity of DFS : O(3N) ~ O(N), Space for queue data structure visited array and an adjacency list
+
+    DFS : 
+
+        void dfs(int vertex,vector<int>& ans,int vis[],vector<int> adj[]){
+        if(vis[vertex]==0){
+            vis[vertex]=1;
+            ans.push_back(vertex);
+            for(auto child : adj[vertex]){
+                if(!vis[child]){
+                    dfs(child,ans,vis,adj);
+                }
+            }
+        }
+    }
+    
+    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+        // Code here
+        int vertex = 0;
+        vector<int> ans;
+        int vis[V] = {0};
+        dfs(vertex,ans,vis,adj);
+        return ans;
+    }
+
+    Time complexity of DFS : For an undirected graph, O(N) + O(2E), For a directed graph, O(N) + O(E), Because for every node we are calling the recursive function once, the time taken is O(N) and 2E is for total degrees as we traverse for all adjacent nodes.
+    Space complexity of DFS : O(3N) ~ O(N), Space for dfs stack space, visited array and an adjacency list.
+   
+
+
+48) Q) Rotate Array ->  https://leetcode.com/problems/rotate-array/
+
+    Ans) 
+        i) O(n) space complexity : 
+
+           void rotate(vector<int>& nums, int k) {
+        int n = nums.size();
+        vector<int> temp(n);
+        k = k%n;
+        for(int i=0;i<n;i++){
+            temp[i] = nums[(i+n-k)%n];
+        }
+        for(int i=0;i<n;i++){
+            nums[i] = temp[i];
+        }
+    }
+
+
+    ii) my approach for O(1) space complexity : 
+
+        void rotate(vector<int>& nums, int k) {
+       
+        int n = nums.size();
+        k = k%n;
+         if(k==0){
+            return;
+        }
+        int j=0;
+        int i = 0;
+        int cnt = 0;
+        int temp = nums[n-k];
+        while(cnt!=n){
+            int x = nums[i];
+            nums[i] = temp;
+            temp = x;
+            cnt++;
+            if(i==n-k+j && cnt!=n){
+                j++;
+                i = j;
+                temp = nums[n-k+j];
+            }
+            else i = (i+k)%n;
+        }
+    }
+
+    iii) Other good approach for O(1) space complexity :
+
+         void rotate(vector<int>& nums, int k) {
+        int n = nums.size();
+        k = k%n;
+        reverse(nums.begin(),nums.end()-k);
+        reverse(nums.begin()+n-k,nums.end());
+        reverse(nums.begin(),nums.end());
+    }
+
+
+49) Q) N-Queen -> https://leetcode.com/problems/n-queens/
+
+   Ans) 
+
+      i) my recursive approach :
+  
+         / void solve(vector<vector<string>>& ans,vector<string> anss,vector<vector<int>> attack,int i,int n){
+    //     if(i==n){
+    //        ans.push_back(anss);
+    //        return;
+    //     }
+    //     int count = 0;
+    //     string s;
+    //     for(int j=0;j<n;j++){
+    //         s.push_back('.');
+    //     }
+    //     vector<pair<int,int>> tempattack;
+    //     for(int j=0;j<n;j++){
+    //         if(attack[i][j]==0){
+    //             s[j] = 'Q';
+    //             anss.push_back(s);
+    //             int left=1,right=1;
+    //             for(int k = i+1;k<n;k++){
+    //                 if(attack[k][j]==0){
+    //                 attack[k][j] = 1;
+    //                 pair<int,int> p = {k,j};
+    //                 tempattack.push_back(p);
+    //                 }
+    //                 if(j-left>=0){
+    //                     if(attack[k][j-left]==0){
+    //                     attack[k][j-left] = 1;
+    //                     pair<int,int> p = {k,j-left};
+    //                     tempattack.push_back(p);
+    //                     }
+    //                     left++;
+    //                 }
+    //                 if(j+right<n){
+    //                     if(attack[k][j+right] == 0){
+    //                     attack[k][j+right] = 1;
+    //                     pair<int,int> p = {k,j+right};
+    //                     tempattack.push_back(p);
+    //                     }
+    //                     right++;
+    //                 }
+    //             }
+    //             solve(ans,anss,attack,i+1,n);
+    //             s[j] = '.';
+    //             anss.pop_back();
+    //             for(auto it=tempattack.begin();it!=tempattack.end();it++){
+    //                 attack[it->first][it->second] = 0;
+    //             }
+    //         }
+    //         else{
+    //             count++;
+    //         }
+    //     }
+    //     if(count==n){
+    //         return;
+    //     }
+    // }
+
+    // vector<vector<string>> solveNQueens(int n) {
+    //     vector<vector<string>> ans;
+    //     vector<string> anss;
+    //     vector<vector<int>> attack(n, vector<int> (n,0));
+    //     solve(ans,anss,attack,0,n);
+    //     return ans;
+    // }
+
+    ii) oprimal approach :
+
+       void solve(int col,vector<string> &board,vector<vector<string>>& ans,vector<int>& leftRow,vector<int> &upperDiagonal,vector<int>& lowerDiagonal,int n){
+        if(col==n){
+            ans.push_back(board);
+            return;
+        }
+
+        for(int row=0;row<n;row++){
+            if(leftRow[row]==0 && lowerDiagonal[row+col]==0 && upperDiagonal[n-1+col-row]==0){
+                board[row][col] = 'Q';
+                leftRow[row]=1;
+                lowerDiagonal[row+col] = 1;
+                upperDiagonal[n-1+col-row] = 1;
+                solve(col+1,board,ans,leftRow,upperDiagonal,lowerDiagonal,n);
+                board[row][col] = '.';
+                leftRow[row] = 0;
+                lowerDiagonal[row+col] = 0;
+                upperDiagonal[n-1+col-row] = 0;
+            } 
+        }
+    }
+
+    vector<vector<string>> solveNQueens(int n){
+        vector<vector<string>> ans;
+        vector<string> board(n);
+        string s(n,'.');
+        for(int i=0;i<n;i++){
+            board[i] = s;
+        }
+        vector<int> leftRow(n,0),upperDiagonal(2*n - 1,0),lowerDiagonal(2*n - 1,0);
+        solve(0,board,ans,leftRow,upperDiagonal,lowerDiagonal,n);
+        return ans;
+    }
+
+50) Q) Move zeros ->  https://leetcode.com/problems/move-zeroes/description/
+
+    Ans) i) My approach : 
+
+          void moveZeroes(vector<int>& nums) {
+        int n = nums.size();
+        int j = 0;
+        for(int i=0;i<n;i++){
+            if(nums[i]!=0){
+                nums[j] = nums[i];
+                j++;
+            }
+        }
+        for(int i=j;i<n;i++){
+            nums[i] = 0;
+        }
+        return;
+    }
+
+    ii) Optimal approach :
+
+        void moveZeroes(vector<int>& nums) {
+        int i,j;
+        for(i=0,j=0;i<nums.size();){
+            if(nums[i]==0) i++;
+            else{
+                swap(nums[i],nums[j]);
+                i++;
+                j++;
+            }
+        }  
+    }
+
+51) Q) Union of two sorted arrays -> https://practice.geeksforgeeks.org/problems/union-of-two-sorted-arrays-1587115621/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=union-of-two-sorted-arrays
+
+    Ans) vector<int> findUnion(int arr1[], int arr2[], int n, int m)
+    {
+        //Your code here
+        //return vector with correct order of elements
+        vector<int> v;
+        int i=0,j=0;
+        while(i<n && j<m){
+            while(i+1<n && arr1[i]==arr1[i+1]){         // Note this
+                i++;
+            }
+            while(j+1<m && arr2[j]==arr2[j+1]){        // this also
+                j++;
+            }
+            if(arr1[i]<arr2[j]){
+                v.push_back(arr1[i]);
+                i++;
+            }
+            else if(arr1[i]==arr2[j]){
+                v.push_back(arr1[i]);
+                i++;j++;
+            }
+            else{
+                v.push_back(arr2[j]);
+                j++;
+            }
+        }
+        while(i<n){
+            while(i+1<n && arr1[i]==arr1[i+1]){
+                i++;
+            }
+            v.push_back(arr1[i++]);
+        }
+        while(j<m){
+            while(j+1<m && arr2[j]==arr2[j+1]){
+                j++;
+            }
+            v.push_back(arr2[j++]);
+        }
+        
+        return v;
+
+52) Q) Rat in a Maze-I -> https://practice.geeksforgeeks.org/problems/rat-in-a-maze-problem/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=rat-in-a-maze-problem
+
+    Ans) i) My solution : 
+
+            void solve(vector<vector<int>>& m,int& n,string path,vector<string>& ans,map<pair<int,int>,int> vis,int i,int j){
+        if(i==n-1 && j==n-1){
+            ans.push_back(path);
+        }
+        pair<int,int> p[4]= {{1,0},{0,-1},{0,1},{-1,0}};
+        char arr[4] = {'D','L','R','U'};
+        for(int k=0;k<4;k++){
+            int x = i+p[k].first,y=j+p[k].second;
+            if(0<=x && x<n && 0<=y && y<n && vis[{x,y}]==0){
+                vis[{x,y}]++;
+                if(m[x][y]==1){
+                    path.push_back(arr[k]);
+                    solve(m,n,path,ans,vis,x,y);
+                    vis[{x,y}]=0;
+                    path.pop_back();
+                }
+            }
+        }
+        return;
+    }
+    
+    vector<string> findPath(vector<vector<int>> &m, int n) {
+        // Your code goes here
+        vector<string> ans;
+        if(m[0][0]==0 || m[n-1][n-1]==0){
+            return ans;
+        }
+        string path="";
+        map<pair<int,int>,int> vis;
+        vis[{0,0}]=1;
+        solve(m,n,path,ans,vis,0,0);
+        return ans;
+    }
+
+
+53) Q) Word break -> https://leetcode.com/problems/word-break/description/
+
+    Ans) 
+
+        i) My recursive solution ( this will not work, TIME LIMIT EXCEEDED ERROR) :
+
+           bool solve(string& s,vector<string>& wordDict,int index){
+        if(index==s.size()){
+            return true;
+        }
+        for(int i=wordDict.size()-1;i>=0;i--){
+            int x = wordDict[i].size();
+            if(wordDict[i]==s.substr(index,x)){
+               if(solve(s,wordDict,index+x)){
+                   return true;
+               }
+            }
+        }
+        return false;
+    }
+
+    bool wordBreak(string s, vector<string>& wordDict) {
+        return solve(s,wordDict,0);
+    }
+
+     ii) My recursive approach followed by memoization ( 1D memoization) (this works) :
+
+         bool solve(string& s,vector<string>& wordDict,int memo[],int index){
+        if(index==s.size()){
+            return true;
+        }
+        if(memo[index]!=-1){
+            return memo[index];
+        }
+        for(int i=wordDict.size()-1;i>=0;i--){
+            int x = wordDict[i].size();
+            if(wordDict[i]==s.substr(index,x)){
+               if(solve(s,wordDict,memo,index+x)){
+                   memo[index] = true;
+                   return true;
+               }
+            }
+        }
+        memo[index] = false;
+        return false;
+    }
+
+    bool wordBreak(string s, vector<string>& wordDict) {
+        int memo[s.size()];
+        memset(memo,-1,sizeof(memo));
+        return solve(s,wordDict,memo,0);
+    }
+
+    iii) DFS approach : 
+
+         bool wordBreak(string s,vector<string>& wordDict){
+        set<string> set(wordDict.begin(),wordDict.end());
+        vector<int> vis(s.size(),0);
+        queue<int> q;
+        q.push(0);
+        while(!q.empty()){
+            int start = q.front();
+            q.pop();
+            if(vis[start]==1){
+                continue;
+            }
+            // for(auto& x : set){
+            //     int l = x.size();
+            //     if(s.substr(start,l) == x){                              
+            //         q.push(start+l);
+            //         if(start+l == s.size()) return true;
+            //     }
+            // }
+
+            for(int end = start+1;end<=s.size();end++){
+                if(set.find(s.substr(start,end-start)) != set.end()){
+                    q.push(end);
+                    if(end==s.size()){
+                        return true;
+                    }
+                }
+            }
+            vis[start] = 1;
+        }
+        return false;
+    }
+
+    iv) tabulation dp approach : (i didn't understand this)
+
+        bool wordBreak(string s, vector<string>& wordDict) {
+        set<string> word_set(wordDict.begin(), wordDict.end());
+        vector<bool> dp(s.length() + 1);
+        dp[0] = true;
+
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] and
+                    word_set.find(s.substr(j, i - j)) != word_set.end()) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+
+54) Q) M Coloring Problem -> https://practice.geeksforgeeks.org/problems/m-coloring-problem-1587115620/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=m-coloring-problem
+
+Ans) i) my recursive solution :
+
+        bool solve(int vertex,vector<vector<int>>& list,vector<vector<int>> check,int n,int m,vector<int>& vis){
+        if(vertex==n){
+            return true;
+        }
+        for(int i=0;i<m;i++){
+            if(check[vertex][i]==0){
+                vector<int> v;
+                for(auto child : list[vertex]){
+                    if(check[child][i]==0){
+                        check[child][i] = 1;
+                        v.push_back(child);
+                    }
+                }
+                if(solve(vertex+1,list,check,n,m,vis)){
+                    return true;
+                }
+                for(auto child : v){
+                    check[child][i] = 0;
+                }
+            }
+        }
+        return false;
+    }
+    
+    bool graphColoring(bool graph[101][101], int m,int n){
+        vector<vector<int>> list;
+        for(int i=0;i<n;i++){
+            vector<int> v;
+            for(int j=0;j<n;j++){
+                if(graph[i][j]==true && i!=j){
+                    v.push_back(j);
+                }
+            }
+            list.push_back(v);
+        }
+        vector<vector<int>> check(n, vector<int> (m, 0));
+        vector<int> vis(n,0);
+        return solve(0,list,check,n,m,vis);
+    } 
+
+     ii) Striver's recursive solution : 
+
+         bool isSafe(int node, int color[], bool graph[101][101], int n, int col) {
+  for (int k = 0; k < n; k++) {
+    if (k != node && graph[k][node] == 1 && color[k] == col) {
+      return false;
+    }
+  }
+  return true;
+}
+bool solve(int node, int color[], int m, int N, bool graph[101][101]) {
+  if (node == N) {
+    return true;
+  }
+
+  for (int i = 1; i <= m; i++) {
+    if (isSafe(node, color, graph, N, i)) {
+      color[node] = i;
+      if (solve(node + 1, color, m, N, graph)) return true;
+      color[node] = 0;
+    }
+
+  }
+  return false;
+}
+
+//Function to determine if graph can be coloured with at most M colours such
+//that no two adjacent vertices of graph are coloured with same colour.
+bool graphColoring(bool graph[101][101], int m, int N) {
+  int color[N] = {
+    0
+  };
+  if (solve(0, color, m, N, graph)) return true;
+  return false;
+}
+
+55) Q) Find missing number in an array -> https://leetcode.com/problems/missing-number/
+
+Ans) i) O(n) space complexity : 
+
+        // int missingNumber(vector<int>& nums) {
+    //     map<int,int> m;
+    //     for(int i=0;i<nums.size();i++){
+    //         m[nums[i]]++;
+    //     }
+    //     for(int i=0;i<=nums.size();i++){
+    //         if(m[i]==0){
+    //             return i;
+    //         }
+    //     }
+    //     return 1;
+    // }
+
+    ii) O(1) space complexity : 
+
+         int missingNumber(vector<int>& nums){
+        int n = nums.size();
+        int sum = 0;
+        for(int i=0;i<=n;i++){
+            sum = sum + i;
+            if(i!=n){
+                sum = sum - nums[i];
+            }
+        }
+        return sum;
+    }
+
+    iii) 	MUST WATCH : 
+
+          https://www.youtube.com/watch?v=5nMGY4VUoRY
+
+56) Maximum consecutive ones -> https://leetcode.com/problems/max-consecutive-ones/
+
+Ans) int findMaxConsecutiveOnes(vector<int>& nums) {
+        // set<int,greater<int>> ans;
+        int ans = INT_MIN;
+        int cnt = 0;
+        for(int i=0;i<nums.size();i++){
+           if(nums[i]==1) cnt++;
+           else{
+            //    ans.insert(cnt);
+               if(cnt>ans){
+                   ans = cnt;
+               }
+               cnt = 0;
+           }
+        }
+        // ans.insert(cnt);
+        if(cnt>ans) ans = cnt;
+        // auto it = ans.begin();
+        // return (*it);
+        return ans;
+    }
+
+
+57) Q) Suduko Solver -> https://leetcode.com/problems/sudoku-solver/
+
+Ans) i) My recursive approach : 
+
+        bool solve(int index,vector<vector<char>>& board,vector<vector<int>> rowcheck,vector<vector<int>> colcheck,vector<vector<int>> gridcheck){
+        int n = 9;
+        if(index==81){
+            return true;
+        }
+        int i = index/n, j = index%n;
+        int x = i/3, y = j/3;
+        int pos = x*3 + y;
+        if(board[i][j]!='.'){
+            return solve(index+1,board,rowcheck,colcheck,gridcheck);
+        }
+        else{
+            for(int k = 1;k<=9;k++){
+                if(rowcheck[i][k]==0 && colcheck[j][k]==0 && gridcheck[pos][k]==0){
+                    board[i][j] = k+ 48;
+                    rowcheck[i][k] = 1;
+                    colcheck[j][k] = 1;
+                    gridcheck[pos][k] = 1;
+                    if(solve(index+1,board,rowcheck,colcheck,gridcheck)){
+                        return true;
+                    }
+                    board[i][j] = '.';
+                    rowcheck[i][k] = 0;
+                    colcheck[j][k] = 0;
+                    gridcheck[pos][k] = 0;
+                }
+            }
+            return false;
+        }
+    }
+
+    void solveSudoku(vector<vector<char>>& board) {
+       int n=9;
+       vector<vector<int>> rowcheck(n, vector<int> (10,0));
+       vector<vector<int>> colcheck(n, vector<int> (10,0));
+       vector<vector<int>> gridcheck(n, vector<int> (10,0));
+       for(int i=0;i<9;i++){
+           for(int j=0;j<9;j++){
+               if(board[i][j]=='.'){
+                continue;
+               }
+               else{
+                   rowcheck[i][board[i][j]-48] = 1;
+                   colcheck[j][board[i][j]-48] = 1;
+                   int x = i/3, y = j/3;
+                   int pos = x*3 + y;
+                   gridcheck[pos][board[i][j]-48] = 1;
+               }
+           }
+       }
+       bool xbar = solve(0,board,rowcheck,colcheck,gridcheck);
+    }
+
+    ii) Optimal approach : 
+
+        void solveSudoku(vector<vector<char>>& board){
+        solve(board);
+    }
+
+    bool solve(vector<vector<char>>& board){
+        for(int i=0;i<board.size();i++){
+            for(int j=0;j<board[0].size();j++){
+                if(board[i][j]=='.'){
+                    for(char c = '1';c<='9';c++){
+                        if(isValid(board,i,j,c)){
+                           board[i][j] = c;
+                           if(solve(board) == true){
+                               return true;
+                           }
+                           else{
+                               board[i][j] = '.';
+                           }
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    bool isValid(vector<vector<char>>& board,int row,int col,char c){
+        for(int i=0;i<9;i++){
+            if(board[i][col]==c){
+                return false;
+            }
+
+            if(board[row][i]==c){
+                return false;
+            }
+
+            if(board[3*(row/3) + i/3][3*(col/3) + i%3] == c){
+                return false;
+            }
+        }
+        return true;
+    }
+
+58) Q) Expression Add Operators -> https://leetcode.com/problems/expression-add-operators/description/
+
+Ans) i) My first recursive approach : (Here I first created all the possible expressions, and for every expression in the base case, i have found its value and compared
+                                      it with target)
+
+         vector<string> addOperators(string num, int target) {
+        int n = num.size();
+        vector<string> ans;
+        string temp;
+        temp.push_back(num[0]);
+        solve(0,n,num,target,ans,temp);
+        return ans;
+    }
+
+    void solve(int index,int& n,string& num,int& target,vector<string>& ans,string temp){
+        if(index==n-1){
+            if(check(temp,target)){
+                ans.push_back(temp);
+            }
+            return;
+        }
+        // first case
+        int ts = temp.size();
+        if((num[index]!='0') || (num[index]=='0' && ts-2>=0 && temp[ts-2]!='+' && temp[ts-2]!='-' && temp[ts-2]!='*')){
+        temp.push_back(num[index+1]);
+        solve(index+1,n,num,target,ans,temp);
+        temp.pop_back();
+        }
+        // second case
+        temp.push_back('+');
+        temp.push_back(num[index+1]);
+        solve(index+1,n,num,target,ans,temp);
+        temp.pop_back();
+        temp.pop_back();
+        // third case
+        temp.push_back('-');
+        temp.push_back(num[index+1]);
+        solve(index+1,n,num,target,ans,temp);
+        temp.pop_back();
+        temp.pop_back();
+        // fourth case
+        temp.push_back('*');
+        temp.push_back(num[index+1]);
+        solve(index+1,n,num,target,ans,temp);
+        temp.pop_back();
+        temp.pop_back();
+        return;
+    }
+
+    bool check(string& temp,int& target){
+            long long int val = 0;
+            char prevop = '+';
+            char nextop;
+            long long int currval = 0;
+            int i = 0,j;
+            int m = temp.size();
+            long long int prevval = 0;
+            while(i<m){
+                currval = temp[i] - 48;
+                j = i+1;
+                while(temp[j]!='+' && temp[j]!='-' && temp[j]!='*' && j<m){
+                    currval = currval*10 + (temp[j]-48);
+                    j++;
+                }
+                if(j<m){
+                    nextop = temp[j];
+                }
+                else nextop = '.';
+                if(prevop=='+'){
+                    if(nextop!='*') val = val + currval;
+                    else{
+                        prevval = currval;
+                    }
+                }
+                else if(prevop=='-'){
+                    if(nextop!='*'){
+                        val = val - currval;
+                    }
+                    else{
+                        prevval = currval - 2*currval;
+                    }
+                    
+                }
+                else if(prevop=='*'){
+                    currval = currval*prevval;
+                    if(nextop!='*'){
+                       val = val + currval;
+                    }
+                    else{
+                       prevval = currval;
+                    }
+                }
+                if(j<m){
+                    prevop = temp[j];
+                }
+                i = j+1;
+            }
+            if(val==target){
+                return true;
+            }
+            return false;
+    }
+
+    ii) Second recursive approach : (Here I have calculated the value of expression simultaneaously while i am generating them) 
+
+                               NOTE : In this method, i learnt how to evaluate an expression in fly when we are having * along with + and - 
+
+         vector<string> addOperators(string num, int target) {
+        int n = num.size();
+        vector<string> ans;
+        string temp;
+        long long int val = num[0] - 48;
+        long long int sum = 0;
+        temp.push_back(num[0]);
+        char prevop = '+';
+        long long int prevval = 0;
+        solve(0,n,num,target,ans,temp,val,sum,prevop,prevval);
+        return ans;
+    }
+
+    void solve(int index,int n,string& num,int target,vector<string>& ans,string temp,long long int val,long long int sum,char prevop,long long int prevval){
+        if(index==n-1){
+             if(prevop=='+'){
+            sum += val;
+        }
+        else if(prevop=='-'){
+            sum -= val;
+        }
+        else{
+            sum = sum - prevval + (prevval*val);
+        }
+            if(sum==target){
+                ans.push_back(temp);
+            }
+            return;
+        }
+        // first case
+        if(val>0){
+            temp.push_back(num[index+1]);
+        solve(index+1,n,num,target,ans,temp,val*10 + num[index+1] - 48,sum,prevop,prevval);
+        temp.pop_back();
+        }
+        // Modifying the sum
+        if(prevop=='+'){
+            sum += val;
+            prevval = val;
+        }
+        else if(prevop=='-'){
+            sum -= val;
+            prevval = val - 2*val;
+        }
+        else{
+            sum = sum - prevval + (prevval*val);
+            prevval = prevval*val;
+        }
+        // second case 
+        temp.push_back('+');
+        temp.push_back(num[index+1]);
+        prevop = '+';
+        solve(index+1,n,num,target,ans,temp,num[index+1]-48,sum,prevop,prevval);
+        temp.pop_back();
+        temp.pop_back();
+        // third case
+        temp.push_back('-');
+        temp.push_back(num[index+1]);
+        prevop = '-';
+        // long long int x = num[index+1] - num[index+1]*2 + 48;
+        solve(index+1,n,num,target,ans,temp,num[index+1]-48,sum,prevop,prevval);
+        temp.pop_back();
+        temp.pop_back();
+        // fourth case
+        temp.push_back('*');
+        temp.push_back(num[index+1]);
+        prevop = '*';
+        solve(index+1,n,num,target,ans,temp,num[index+1]-48,sum,prevop,prevval);
+        temp.pop_back();
+        temp.pop_back();
+        return;
+    }
+
+
+59) Q) Detect a loop in undirected graph -> https://practice.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=detect-cycle-in-an-undirected-graph
+
+Ans) Make sure u cover all the connected components.
+
+
+60) Q) 0/1 matrix (nearest 0 for each cell) -> https://leetcode.com/problems/01-matrix/
+
+Ans) In this problem understand why we should not use DFS, and why using BFS is most appropriate.s
+
+61) Q) Rotten Oranges -> https://leetcode.com/problems/rotting-oranges/
+
+Ans) In this problem also using BFS is appropriate approach.
+
+62) Q) Surrounded regions -> https://leetcode.com/problems/surrounded-regions/description/
+
+Ans) i) My approach : In this problem, my approach is to simply traverse all the board, and if i find a 'O' i am gonna traverse all the 'O's adjacent to that 'O' and check
+                      if any of them is on the boundary. I will add all these indexes to the path while traversing, and simultaneously upadate the flip to zero, if 'O' is
+                      on the boundary. If flip = 1, i will change all the elements in the path to 'X'.
+
+     ii) Striver's approach : In this basically we only focus on the boundary 'O's , and traverse all 'O's from this 'O's , and mark all them visited, so that it means we
+                              should not flip them. Then we will traverse the entire board, and change those 'O's to 'X's which are unvisited.
+
+63) Q) word Ladder - I -> https://leetcode.com/problems/word-ladder/
+
+Ans) i) DFS approach gives "TLE" because, we are doing unnecessary recursions. Bascially here we need to find which path reaches the end first, so using BFS is more 
+        appropriate. 
+
+     ii) Note : In BFS also, we have to do pre-processing to avoid "TLE".
+
+         Solution with pre-processing : 
+
+
+         int ladderLength(string word, string end, vector<string>& list) {
+        queue<string> q;
+        int n = word.size();
+        map<string,int> vis;
+        map<string,int> level;
+        map<string,vector<string>> mylist;
+        for(int i=0;i<list.size();i++){
+            for(int j=0;j<n;j++){
+                string x = list[i].substr(0,j) + '*' + list[i].substr(j+1);
+                mylist[x].push_back(list[i]);
+            }
+        }
+        q.push(word);
+        vis[word]++;
+        level[word] = 1;
+        while(!q.empty()){
+            string index = q.front();
+            q.pop();
+            if(index == end){
+                return level[end];
+            }
+            for(int i=0;i<n;i++){
+                string x = index.substr(0,i) + '*' + index.substr(i+1);
+                for(auto elem : mylist[x]){
+                    if(vis[elem]==0){
+                        q.push(elem);
+                        vis[elem]++;
+                        level[elem] = level[index] + 1;
+                    }
+                }
+            }
+        }
+        return 0;
+     }            
+
+
+64) Q) Number of distinct Islands -> https://practice.geeksforgeeks.org/problems/number-of-distinct-islands/1
+
+Ans) Note : We can solve this problem with BFS and DFS also, the basic point to be noted in this problem is how to extract the island using relative positioning of the 
+            1's. And then we can get the distinct islands by using a set.
+
+65) Q) Bi-Partite Graph -> https://leetcode.com/problems/is-graph-bipartite/description/
+
+Ans) Bi-partite Graph : A graph is bipartite if the nodes can be partitioned into two independent sets A and B such that every edge in the graph connects a node in set A             
+                        and a node in set B.
+
+     Note : This problem can also be asked like, can we colour the nodes, with only two colours, such that the adjacent nodes are not of same colour.
+
+Note : this problem can be solved by BFS and DFS both. One important point to remember, is that a graph which contains a odd length loop or cycle is Bi-Partite, but 
+            ofcourse this problem is not solved with this logic.
+
+
+66) Q) Course Schedule - II -> https://leetcode.com/problems/course-schedule-ii/description/
+
+Ans) i) My initial approach( works ) : 
+
+     // vector<int> findOrder(int numcourses, vector<vector<int>>& prerequisites) {
+    //     map<int,vector<int>> pre,next;
+    //     for(int i=0;i<prerequisites.size();i++){
+    //         int a = prerequisites[i][0];
+    //         int b = prerequisites[i][1];
+    //         pre[a].push_back(b);
+    //         next[b].push_back(a);
+    //     }
+    //     queue<int> q;
+    //     vector<int> vis(numcourses,0);
+    //     vector<int> order;
+    //     for(int i=0;i<numcourses;i++){
+    //         if(vis[i]==0 && pre[i].size()==0){
+    //             q.push(i);
+    //             while(!q.empty()){
+    //                 int vertex = q.front();
+    //                 q.pop();
+    //                 if(vis[vertex]==1) continue;
+    //                 int x = 0;
+    //                 for(auto prereq : pre[vertex]){
+    //                     if(vis[prereq]==0){
+    //                        x = 1;
+    //                        break;
+    //                     }
+    //                 }
+    //                 if(x) continue;
+    //                 vis[vertex] = 1;
+    //                 order.push_back(vertex);
+    //                 for(auto child : next[vertex]){
+    //                     q.push(child);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     vector<int> dummy;
+    //     for(int i=0;i<numcourses;i++){
+    //         if(vis[i]==0){
+    //             return dummy;
+    //         }
+    //     }
+    //     return order;
+    // }
+
+    ii) Toposort Algorithm Approach :
+
+        // vector<int> findOrder(int numcourses,vector<vector<int>>& prerequisites){
+    //     vector<int> graph[numcourses];
+    //     for(int i=0;i<prerequisites.size();i++){
+    //         graph[prerequisites[i][1]].push_back(prerequisites[i][0]);
+    //     }
+    //     stack<int> s;
+    //     vector<int> ans;
+    //     vector<int> vis(numcourses,0);
+    //     for(int i=0;i<numcourses;i++){
+    //         if(!vis[i]){
+    //             vector<int> vis2(numcourses,0);
+    //             solve(i,s,graph,vis,vis2);
+    //         }
+    //     }
+    //     while(!s.empty()){
+    //         if(s.top() == -1){
+    //             return *(new vector<int>);
+    //         }
+    //         ans.push_back(s.top());
+    //         s.pop();
+    //     }
+    //     if(numcourses == ans.size()) return ans;
+    //     else return *(new vector<int>);
+    // }
+
+    // void solve(int vertex,stack<int>& s,vector<int> graph[],vector<int>& vis,vector<int> vis2){
+    //     vis[vertex] = 1;
+    //     vis2[vertex] = 1;
+    //     for(auto child : graph[vertex]){
+    //         if(!vis[child]) solve(child,s,graph,vis,vis2);
+    //         else if(vis2[child]){
+    //             s.push(-1);
+    //         }
+    //     }
+    //     s.push(vertex);
+    //     return;
+    // }
+
+
+67) Q) cycle detection in Directed Graph -> https://practice.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=detect-cycle-in-a-directed-graph
+
+Ans) The difference between detecting a loop in a undirected graph and a directed graph, is that : In a directed graph if a node on branch 1 is connected to some node on 
+     branch 2, then that does not form a loop, but it forms a loop in undirected graph.
+
+     Note : So to detect a loop in a directed graph, we need 2 visited arrays.
+
+      i) Two visited arrays approach :
+
+      bool isCyclic(int v, vector<int> adj[]) {
+        // code here
+        vector<int> vis(v,0);
+        vector<int> vis2(v,0);
+        for(int i=0;i<v;i++){
+            if(!vis[i]){
+                bool x = dfs(i,vis,adj,vis2);
+                vis2[i] = 0;
+                if(x) return true;
+            }
+        }
+        return false;
+    }
+    
+    bool dfs(int vertex,vector<int>& vis,vector<int> adj[],vector<int>& vis2){
+        vis[vertex] = 1;
+        vis2[vertex] = 1;
+        for(auto child : adj[vertex]){
+            if(vis2[child]==1){
+                return true;
+            }
+            else if(vis[child]==0){
+                bool x = dfs(child,vis,adj,vis2);
+                vis2[child] = 0;
+                if(x) return true;
+            }
+        }
+        return false;
+    }
+
+    ii) Using KHANS'S ALGORITHM (BFS AND DFS) -> https://practice.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=detect-cycle-in-a-directed-graph
+
+68) Q) Topological Sort ( TOPO SORT) -> https://practice.geeksforgeeks.org/problems/topological-sort/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=topological-sort
+
+Ans) Topological sort : Topo sort IS POSSIBLE ONLY IN DIRECTED ACYCLIC GRAPH(DAG), it is basically linear ordering of the nodes, in such a way that if there is a edge from
+                        'u' to 'v', then in the topo sort, 'u' must be to the left of 'v'.
+
+     vector<int> topoSort(int v, vector<int> adj[]) 
+	{
+	    // code here
+	    stack<int> s;
+	    vector<int> vis(v,0);
+	    for(int i=0;i<v;i++){
+	        if(!vis[i]) dfs(i,adj,s,vis);
+	    }
+	    vector<int> ans;
+	    while(!s.empty()){
+	        ans.push_back(s.top());
+	        s.pop();
+	    }
+	    return ans;
+	}
+	
+	void dfs(int vertex,vector<int> adj[],stack<int>& s,vector<int>& vis){
+	    for(auto child : adj[vertex]){
+	        if(!vis[child]){
+	            dfs(child,adj,s,vis);
+	        }
+	    }
+	    vis[vertex] = 1;
+	    s.push(vertex);
+	}
+
+69) Q) KAHN'S ALGORITHM -> https://practice.geeksforgeeks.org/problems/topological-sort/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=topological-sort
+
+Ans) In NORMAL TOPOLOGICAL SORT, we send a node which doesn't have an OUTGOING EDGE into the STACK.
+
+     But in KAHN'S ALGORITHM, we push a node which doesn't have an INCOMING EDGE into the VECTOR.
+
+     i) KHAN'S ALGORITHM (BFS) : 
+ 
+        vector<int> topoSort(int v,vector<int> adj[]){
+    int indegree[v] = {0};
+    for(int i=0;i<v;i++){
+        for(auto it : adj[i]){
+            indegree[it]++;
+        }
+    } 
+    queue<int> q;
+    for(int i=0;i<v;i++){
+        if(indegree[i]==0){
+            q.push(i);
+        }
+    }
+    vector<int> topo;
+    while(!q.empty()){
+        int node = q.front();
+        q.pop();
+        topo.push_back(node);
+        for(auto it : adj[node]){
+            indegree[it]--;
+            if(indegree[it]==0) q.push(it);
+        }
+    }
+    return topo;
+ }
+
+  ii) KHAN'S ALGORITHM (DFS) : 
+ 
+        bool isCyclic(int v,vector<int> adj[]){
+    //     int indegree[v] = {0};
+    //     for(int i=0;i<v;i++){
+    //         for(auto node : adj[i]){
+    //             indegree[node]++;
+    //         }
+    //     }
+    //     vector<int> zeronodes;
+    //     vector<int> topo;
+    //     for(int i=0;i<v;i++){
+    //         if(indegree[i]==0) zeronodes.push_back(i);
+    //     }
+    //     for(auto node : zeronodes){
+    //         dfs(node,topo,adj,indegree);
+    //     }
+    //     if(topo.size() == v) return false;
+    //     return true;
+    // }
+    
+    // void dfs(int vertex,vector<int>& topo,vector<int> adj[],int indegree[]){
+    //     topo.push_back(vertex);
+    //     for(auto child : adj[vertex]){
+    //         indegree[child]--;
+    //         if(indegree[child]==0) dfs(child,topo,adj,indegree);
+    //     }
+    //     return;
+    // }
+
+
+70) Q) Find Eventual Safe States -> https://leetcode.com/problems/find-eventual-safe-states/
+
+Ans) i) My first approach (Striver's approach too) : The appraoch is basically to reverse the entire graph, and call the khan's algorithm on it.
+
+        // vector<int> eventualSafeNodes(vector<vector<int>>& graph){
+    //     int n = graph.size();
+    //     vector<vector<int>> mygraph(n);
+    //     vector<int> outdegree(n,0);
+    //     queue<int> q;
+    //     for(int i=0;i<n;i++){
+    //         for(int j=0;j<graph[i].size();j++){
+    //             mygraph[graph[i][j]].push_back(i);
+    //         }
+    //         outdegree[i] = graph[i].size();
+    //         if(!outdegree[i]) q.push(i);
+    //     }
+    //     vector<int> ans;
+    //     while(!q.empty()){
+    //         int vertex = q.front();
+    //         q.pop();
+    //         ans.push_back(vertex);
+    //         for(auto child : mygraph[vertex]){
+    //             outdegree[child]--;
+    //             if(!outdegree[child]) q.push(child);
+    //         }
+    //     }
+    //     sort(ans.begin(),ans.end());
+    //     return ans;
+    // }
+
+
+    ii) My second approach ( Kind of a better approach i feel) : In this approach we call dfs on unvisited nodes, and if the child is unvisited we call dfs on child, and 
+                                                                 if the child is visited, we check if it is safe or unsafe. If the child node is safe then the vertex is 
+                                                                 safe, else unsafe. Initially all nodes are unsafe.
+
+        vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        int n = graph.size();
+        stack<int> s;
+        vector<int> vis(n,0);
+        vector<int> risk(n,1);
+        for(int i=0;i<n;i++){
+            if(!vis[i]){
+                bool x = dfs(i,graph,s,vis,risk);
+            }
+        }
+        vector<int> ans;
+        while(!s.empty()){
+            ans.push_back(s.top());
+            s.pop();
+        }
+        sort(ans.begin(),ans.end());
+        return ans;
+    }
+
+    bool dfs(int vertex,vector<vector<int>>& graph,stack<int>& s,vector<int>& vis,vector<int>& risk){
+        vis[vertex] = 1;
+        bool x = false;
+        for(auto child : graph[vertex]){
+            if(!vis[child]){
+                bool y = dfs(child,graph,s,vis,risk);
+                if(y) x = true;
+            }
+            else{
+                if(risk[child]==1) x = true;
+            }
+        }
+        if(x==false){
+            s.push(vertex);
+            risk[vertex] = 0;
+        }
+        return x;
+    }
+
+
+71) Permutation Sequence -> https://leetcode.com/problems/permutation-sequence/description/
+
+Ans) i) My solution : 
+   
+      string getPermutation(int n,int k){
+        vector<int> vis(n+1,0);
+        string s="";
+        return solve(n,k,vis,s);
+    }
+
+    string solve(int n,int k,vector<int>& vis,string& s){
+        if(n==1){
+            for(int i=1;i<vis.size();i++){
+                if(vis[i]==0){
+                    s.push_back(i + 48);
+                }
+            }
+            return s;
+        }
+        if(n==2){
+            if(k==1){
+               for(int i=1;i<vis.size();i++){
+                   if(vis[i]==0){
+                       s.push_back(i+48);
+                   }
+               }
+            }
+            if(k==2){
+                for(int i=vis.size()-1;i>0;i--){
+                    if(vis[i]==0){
+                        s.push_back(i+48);
+                    }
+                }
+            }
+            return s;
+        }
+        int x = n - 1;
+        int fact = 1;
+        while(x){
+            fact = fact*x;
+            x--;
+        }
+        if(k%fact == 0){
+            x = k/fact - 1;
+        }
+        else{
+            x = k/fact;
+        }
+        int y = x+1;
+        for(int i =1;i<vis.size();i++){
+            if(vis[i]==0) y--;
+            if(!y){
+                s.push_back(i + 48);
+                vis[i] = 1;
+                break;
+            }
+        }
+        return solve(n-1,k - x*fact,vis,s);
+    }
+
+    ii) Striver's solution :
+
+      string getPermutation(int n,int k){
+        int fact = 1;
+        vector<int> numbers;
+        for(int i=1;i<n;i++){
+            fact = fact*i;
+            numbers.push_back(i);
+        }
+        numbers.push_back(n);
+        string ans = "";
+        k= k - 1;
+        while(true){
+            ans = ans + to_string(numbers[k/fact]);
+            numbers.erase(numbers.begin() + k/fact);
+            if(numbers.size() == 0){
+                break;
+            }
+            k = k%fact;
+            fact = fact/numbers.size();
+        }
+        return ans;
+    }
+
+72) Q) Shortest Path in undirected graph  -> https://practice.geeksforgeeks.org/problems/shortest-path-in-undirected-graph-having-unit-distance/1
+
+Ans) (Simple BFS and infinite distance array approach) (DIJIKSTRA'S ALGORITHM WITH QUEUE) :
+
+   vector<int> shortestPath(vector<vector<int>>& edges, int N,int M, int src){
+        vector<int> adj[N];
+        for(auto it : edges){
+            adj[it[0]].push_back(it[1]);
+            adj[it[1]].push_back(it[0]);
+        }
+        int dist[N];
+        for(int i=0;i<N;i++){
+            dist[i] = 1e9;
+        }
+        dist[src] = 0;
+        queue<int> q;
+        q.push(src);
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            for(auto it : adj[node]){
+                if(dist[node] + 1 < dist[it]){
+                    dist[it] = dist[node] + 1;
+                    q.push(it);
+                }
+            }
+        }
+        vector<int> ans(N,-1);
+        for(int i=0;i<N;i++){
+            if(dist[i] != 1e9){
+                ans[i] = dist[i];
+            }
+        }
+        return ans;
+    }
+
+73) Q) Shortest path in directed acyclic graph -> https://practice.geeksforgeeks.org/problems/shortest-path-in-undirected-graph/1
+
+Ans) i) The Striver's approach : (USING TOPO SORT)(AND DIJIKSTRA'S ALGORITHM)
+
+     We first do topo sort, and then update the infinte distance array. We do topo sort, to make sure that the nodes to the left of current node are already computed, and
+     we cant reach the current node, from the nodes to the right of it.
+
+     vector<int> shortestPath(int N,int M, vector<vector<int>>& edges){
+        // code here
+        vector<pair<int,int>> adj[N];
+        for(int i=0;i<M;i++){
+            int u = edges[i][0];
+            int v = edges[i][1];
+            int wt = edges[i][2];
+            adj[u].push_back({v,wt});
+        }
+        int vis[N] = {0};
+        stack<int> st;
+        for(int i=0;i<N;i++){
+            if(!vis[i]){
+                toposort(i,adj,vis,st);
+            }
+        }
+        vector<int> dist(N);
+        for(int i=0;i<N;i++){
+            dist[i] = 1e9;
+        }
+        dist[0] = 0;
+        while(!st.empty()){
+            int node = st.top();
+            st.pop();
+            for(auto it : adj[node]){
+                int v = it.first;
+                int wt = it.second;
+                if(dist[node] + wt < dist[v]){
+                    dist[v] = wt + dist[node];
+                }
+            }
+        }
+        for(int i=0;i<N;i++){
+            if(dist[i]==1e9) dist[i] = -1;
+        }
+        return dist;
+    }
+    
+    void toposort(int node,vector<pair<int,int>> adj[],int vis[],stack<int>& st){
+        vis[node] = 1;
+        for(auto it : adj[node]){
+            int v = it.first;
+            if(!vis[v]){
+                toposort(v,adj,vis,st);
+            }
+        }
+        st.push(node);
+    }
+
+    ii) My approach (Simple BFS and infinite distance array approach ) (DIJIKSTRA'S ALGORITHM WITHOUT USING TOPO SORT) : 
+
+        Note : ON GEEKS FOR GEEKS, this code and the above code worked the same, but i DONT KNOW why we are using TOPO SORT unnecessarily when this one works. PLEASE FIND     
+               THAT.
+
+        // vector<int> shortestPath(int n,int m,vector<vector<int>>& edges){
+    //     int src = 0;
+    //     vector<pair<int,int>> graph[n];
+    //     for(int i=0;i<m;i++){
+    //         int u = edges[i][0];
+    //         int v = edges[i][1];
+    //         int wt = edges[i][2];
+    //         graph[u].push_back({v,wt});
+    //     }
+    //     queue<int> q;
+    //     vector<int> dist(n,1e9);
+    //     q.push(src);
+    //     dist[src] = 0;
+    //     while(!q.empty()){
+    //         int vertex = q.front();
+    //         q.pop();
+    //         for(auto child : graph[vertex]){
+    //             int v = child.first;
+    //             int wt = child.second;
+    //             if(dist[vertex] + wt < dist[v]){
+    //                 dist[v] = dist[vertex] + wt;
+    //                 q.push(v);
+    //             }
+    //         }
+    //     }
+    //     for(int i=0;i<n;i++){
+    //         if(dist[i]==1e9) dist[i] = -1;
+    //     }
+    //     return dist;
+    // }
+
+
+74) ******************************* DIJIKSTRA'S ALGORITHM ******************************************
+
+Ans) In simple words, In Dijikstra's algorithm we maintain a datastructure which is basically kind of a min-heap(which always stores the minimum element in the top) like
+     priority queue, set. We even maintain a infinite distance array. 
+     We use priority queue because here we implement the algorithm on the basis of increasing order of distances, that is the element with minimum distance at that time in
+     the priority queue is executed first.
+     Initially the distances of all the nodes from the source made 'infinity', then whenever we reach a child node, then we will make its distance minimised if possible,
+     else leave it.
+     >>>>> 
+          NOTE : Use of visited array is optional and optimal. We will process only unvisted nodes and any node is marked as visited if that node is once processed and 
+                 removed from the priority queue.
+     >>>>>
+     >>>>>
+          NOTE : DIJIKSTRA'S ALGORITHM DONT WORK FOR GRAPH WITH NEGATIVE WEIGHTS(DOES NOT WORK MEANS MAY OR MAYNOT)
+     >>>>>
+     
+     i) Dijikstra's algorithm implementation with priority queue : 
+
+        vector<int> dijikstra(int v,vector<vector<int>> adj[],int s){
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pairt<int,int>> pq;
+    vector<int> dist(v);
+    for(int i=0;i<v;i++) dist[i] = 1e9;
+    dist[s] = 0;
+    pq.push({0,s});
+    while(!pq.empty()){
+        int dis = pq.top().first;
+        int node = pq.top().second;
+        pq.pop();
+        for(auto it : adj[node]){
+            int edgeweight =  it[1];
+            int adjnode = it[0];
+            if(dis+edgeweight < dist[adjnode]){
+                dist[adjnode] = dis + edgeweight;
+                pq.push({dist[adjnode],adjnode});
+            }
+        }
+    }
+    return dist;
+}
+
+   ********* WHY PRIORITY QUEUE OR SET ( WHY NOT QUEUE) :  https://www.youtube.com/watch?v=3dINsjyfooY&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=34
+   ********* Time complexity of dijikstra algorithm in the worst case is Elog(V) .
+   ********* Is set better than Priority queue for dijikstra algorithm : https://www.youtube.com/watch?v=PATgNiuTP20&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=33
+             >> Firstly what does a set do : It gives the minimum distance element when we access its top, and the next job that we can do using set is that we can erase
+                                             the higher distance elements of a node when we get a smaller distance, by this we can avoid unnecessary iterations in the 
+                                             Future.
+             >> Priority queue Vs Set : Obviously we can't do the erase operation with priority queue, so that we need to do some unnecessary iterations, but erase
+                                        operation takes time of the order O(log), so it depends on the graph, whether set is better or pq is better. But in general, both
+                                        are almosttt same.
+
+  ii) Dijikstra's algorithm implementation with Set : 
+
+       vector<int> dijikstra(int v,vector<vector<int>> adj[],int s){
+    set<pair<int,int>> st;
+    vector<int> dist(v,1e9);
+    st.insert({0,s});
+    dist[s] = 0;
+    while(!st.empty()){
+        auto it = *(st.begin());
+        int node = it.second;
+        int dis = it.first;
+        st.erase(it);
+        for(auto it : adj[node]){
+            int adjnode = it[0];
+            int edgw = it[1];
+            if(dis+edgw < dist[adjnode]){
+                if(dist[adjnode] != 1e9){
+                    st.erase({dist[adjnode],adjnode});
+                    dist[adjnode] = dis + edgw;
+                    st.insert({dist[adjnode],adjnode});
+                }
+            }
+        }
+    }
+    return dist;
+}
+
+75) Q) Shortest Path in Binary Maze -> https://leetcode.com/problems/shortest-path-in-binary-matrix/description/
+
+Ans) i) My dijikstra approach using set : 
+
+         // int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+    //     int n = grid.size();
+    //     if(grid[0][0] || grid[n-1][n-1]) return -1;
+    //     set<pair<int,int>> s;
+    //     pair<int,int> p[8] = {{0,-1},{-1,-1},{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1}};
+    //     vector<vector<int>> dist(n, vector<int> (n,1e9));
+    //     if(grid[0][0]==0){
+    //       s.insert({1,0});
+    //       dist[0][0] = 1;
+    //     }    
+    //     while(!s.empty()){
+    //         pair<int,int> node = *(s.begin());
+    //         int index = node.second;
+    //         int dis = node.first;
+    //         s.erase(node);
+    //         for(int i=0;i<=7;i++){
+    //             int x = index/n + p[i].first;
+    //             int y = index%n + p[i].second;
+    //             if(0<=x && x<n && 0<=y && y<n && grid[x][y]==0){
+    //                 if(dis + 1 < dist[x][y]){
+    //                     dist[x][y] = dis + 1;
+    //                     s.insert({dist[x][y],x*n + y});
+    //                 }
+    //                 if(x==n-1 && y==n-1){
+    //                     return dist[x][y];
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     if(dist[n-1][n-1]==1e9){
+    //         return -1;
+    //     }
+    //     return dist[n-1][n-1];
+    // }
+
+
+    ii) My dijikstra approach using queue : 
+
+        int shortestPathBinaryMatrix(vector<vector<int>>&grid){
+        int n = grid.size();
+        if(grid[0][0] || grid[n-1][n-1]) return -1;
+        queue<pair<int,int>> q;
+        pair<int,int> p[8] = {{0,-1},{-1,-1},{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1}};
+        vector<vector<int>> dist(n, vector<int> (n,1e9));
+        dist[0][0] = 0;
+        q.push({0,0});
+        while(!q.empty()){
+            pair<int,int> node = q.front();
+            q.pop();
+            int dis = node.first;
+            int index = node.second;
+            for(int i=0;i<=7;i++){
+                int x = index/n + p[i].first;
+                int y = index%n + p[i].second;
+                if(0<=x && x<n && 0<=y && y<n && grid[x][y]==0){
+                    if(dis + 1 < dist[x][y]){
+                        dist[x][y] = dis + 1;
+                        q.push({dis+1,x*n + y});
+                    }
+                }
+            }
+        }
+        if(dist[n-1][n-1]==1e9) return -1;
+        else return 1 + dist[n-1][n-1];
+    }
+
+    NOTE : Here the queue approach beats a lot better than the set approach, find out why ?
+
+
+76) Q) Path with minimum effort -> https://leetcode.com/problems/path-with-minimum-effort/description/
+
+Ans) 
+
+     i) My dijikstra approach using set :
+ 
+        // int minimumEffortPath(vector<vector<int>>& heights) {
+    //     int ans = 0;
+    //     int m = heights.size();
+    //     int n = heights[0].size();
+    //     vector<vector<int>> vis(m, vector<int> (n,0));
+    //     set<pair<int,int>> s;
+    //     s.insert({0,0});
+    //     pair<int,int> p[4] = {{0,-1},{-1,0},{0,1},{1,0}};
+    //     while(!s.empty()){
+    //         pair<int,int> node = *(s.begin());
+    //         int index = node.second;
+    //         if(node.first > ans) ans = node.first;
+    //         vis[index/n][index%n] = 1;
+    //         s.erase(node);
+    //         if(index == m*n-1){
+    //             return ans;
+    //         }
+    //         for(int i=0;i<=3;i++){
+    //             int x = index/n + p[i].first;
+    //             int y = index%n + p[i].second;
+    //             if(0<=x && x<m && 0<=y && y<n && vis[x][y]==0){
+    //                 int diff = abs(heights[x][y] - heights[index/n][index%n]);
+    //                 s.insert({diff,x*n + y});
+    //             }
+    //         }
+    //     }
+    //     return -1;
+    // }
+
+    ii) My dijikstra approach using priority queue : 
+
+        int minimumEffortPath(vector<vector<int>>& heights) {
+        int m = heights.size();
+        int n = heights[0].size();
+        vector<vector<int>> dist(m, vector<int> (n,1e9));
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        dist[0][0] = 0;
+        pq.push({0,0});
+        pair<int,int> p[4] = {{0,-1},{-1,0},{0,1},{1,0}};
+        while(!pq.empty()){
+            pair<int,int> node = pq.top();
+            int index = node.second;
+            int eff = node.first;
+            pq.pop();
+            if(index == m*n-1){
+                return eff;
+            }
+            for(int i=0;i<=3;i++){
+                int x = index/n + p[i].first;
+                int y = index%n + p[i].second;
+                if(0<=x && x<m && 0<=y && y<n){
+                    int diff = abs(heights[x][y] - heights[index/n][index%n]);
+                    int neweff = max(diff,eff);
+                    if(neweff < dist[x][y]){
+                        dist[x][y] = neweff;
+                        pq.push({neweff,x*n + y});
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    NOTE : In this question the priority queue approach beats far better than the set appraoch . FIND OUT WHY?
+
+77) Q) Cheapest flights within K stops -> https://leetcode.com/problems/cheapest-flights-within-k-stops/description/
+
+Ans) i) My approach (DIJIKSTRA) :
+ 
+         int findCheapestPrice(int n,vector<vector<int>>& flights,int src,int dst,int k){
+        vector<pair<int,int>> adj[n];
+        for(auto it : flights){
+            adj[it[0]].push_back({it[1],it[2]});
+        }
+        queue<pair<int,pair<int,int>>> q;
+        q.push({0,{src,0}});
+        vector<int> dist(n,1e9);
+        dist[src] = 0;
+        while(!q.empty()){
+            auto it = q.front();
+            q.pop();
+            int stops = it.first;
+            int node = it.second.first;
+            int cost = it.second.second;
+            if(stops>k) continue;
+            for(auto iter : adj[node]){
+                int adjnode = iter.first;
+                int edw = iter.second;
+                if(cost + edw < dist[adjnode] && stops<=k){
+                    dist[adjnode] = cost + edw;
+                    q.push({stops+1,{adjnode,cost+edw}});
+                }
+            }
+        }
+        if(dist[dst]==1e9) return -1;
+        else return dist[dst];
+    }
+
+
+78) Q) Number of ways to arrive at destination : https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/description/
+
+ans) i) My dijkstra's approach : 
+
+        int countPaths(int n, vector<vector<int>>& roads) {
+        int M = 1e9 + 7;
+        vector<pair<int,int>> graph[n];
+        for(int i=0;i<roads.size();i++){
+            graph[roads[i][0]].push_back({roads[i][1],roads[i][2]});
+            graph[roads[i][1]].push_back({roads[i][0],roads[i][2]});
+        }
+        vector<long long int> time(n,LLONG_MAX);
+        priority_queue<pair<long long int,int>,vector<pair<long long int,int>>,greater<pair<long long int,int>>> q;
+        time[0] = 0;
+        // map<pair<int,int>,int> m;
+        vector<int> ways(n,0);
+        q.push({0,0});
+        // m[{0,0}] = 1;
+        ways[0] = 1;
+        while(!q.empty()){
+            pair<long long int,int> ele = q.top();
+            q.pop();
+            long long int ti = ele.first;
+            int node = ele.second;
+            if(node == n-1) continue;
+            for(auto childele : graph[node]){
+                int childnode = childele.first;
+                long long int t = childele.second;
+                if(ti + t < time[childnode]){
+                    time[childnode] = ti + t;
+                    q.push({ti+t,childnode});
+                    // m[{ti+t,childnode}] = m[ele];
+                    ways[childnode] = ways[node];
+                }
+                else if(ti + t == time[childnode]){
+                    // m[{ti+t,childnode}] = (m[{ti+t,childnode}] + m[ele])%M; 
+                    ways[childnode] = (ways[childnode]+ways[node])%M;
+                }
+            }
+        }
+        // return m[{time[n-1],n-1}];
+        return ways[n-1]%M;
+    }
+
+    NOTE : In this question using queue is not working at higher test cases, (note that it is a undirected graph) , find out why ?
+
+79) Q) Minimum Multiplications to reach End -> https://practice.geeksforgeeks.org/problems/minimum-multiplications-to-reach-end/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=minimum-multiplications-to-reach-end
+
+Ans) i) Striver's solution : 
+
+      int minimumMultiplications(vector<int>& arr, int start, int end) {
+        // code here
+        vector<int> dist(100000,1e9);
+        int M = 100000;
+        queue<pair<int,int>> q;
+        dist[start] = 0;
+        q.push({start,0});
+        while(!q.empty()){
+            int node = q.front().first;
+            int steps = q.front().second;
+            q.pop();
+            for(auto it : arr){
+                int num = (node*it)%M;
+                if(steps + 1 < dist[num]){
+                    dist[num] = steps + 1;
+                    if(num == end) return steps+1;
+                    q.push({num,steps+1});
+                }
+            }
+        }
+        return -1;
+    }
+
+80)******************* BELLMAN FORD ALGORITHM ************* https://www.youtube.com/watch?v=0vVofAhAYjc&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=42 *********
+
+>> Need of Bellman ford algorithm : 
+
+   1) We can't apply Dijkstra's algorithm if the graph contains negative edges.
+   2) Dijkstra's algorithm gives TLE for negative cycles, and we cant detect a negative loop in dijkstra's algorithm.
+
+>> Bellman Ford algorithm can be applied only on Directed Graphs.
+>> So to apply Bellman Ford on an undirected graph, we need to convert it into directed graph first.
+>> Bellman Ford algorithm is used to find the shortest distance to all the nodes from the given source node, for a directed graph with negative edges.
+
+  vector<int> bellman_ford(int V, vector<vector<int>>& edges, int S) {
+        // Code here
+        vector<int> dist(V,1e8);
+        dist[S] = 0;
+        for(int i=0;i<V;i++){
+            for(auto it : edges){
+                int u = it[0];
+                int v = it[1];
+                int wt = it[2];
+                if(dist[u] != 1e8 && dist[u] + wt < dist[v]){
+                    dist[v] = dist[u] + wt;
+                } 
+            }
+        }
+        for(auto it : edges){
+                int u = it[0];
+                int v = it[1];
+                int wt = it[2];
+                if(dist[u] != 1e8 && dist[u] + wt < dist[v]){
+                    return {-1};
+                } 
+            }
+        return dist;
+    }
+
+>> How BELLMAN FORD DETECTS NEGATIVE CYCLES : When we run a relaxation loop on all the edges for n-1 times. The distance array will have the desired shortest paths.
+   And the other run on the edges will have some effect on the distance array only if the graph contains negative cycles.
+
+NOTE : Time complexity of Dijkstra's algorithm is O(ElogV) but Bellman Ford takes more time, O(EV).
+
+
+81)**************** FLOYD WARSHALL ALGORITHM ************ https://www.youtube.com/watch?v=YbY8cVwWAvw&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=43 ***********
+
+>> How is it different from Above two : It is different from Dijkstra's algorithm and Bellman Ford Algorithm, because it is a multisource shortest path algorithm.
+
+>> Like Bellman Ford, Floyd Warshall also detects negarive cycles.
+>> Floyd Warshall Algorithm can be applied only on Directed graphs.
+>> To apply it on undirected graphs, we need to convert the given graph into a directed graph.
+
+   void shortest_distance(vector<vector<int>>&matrix){
+	    // Code here
+	    int n = matrix.size();
+	    for(int i=0;i<n;i++){
+	        for(int j=0;j<n;j++){
+	            if(matrix[i][j]==-1){
+	                matrix[i][j] = 1e9;
+	            }
+	            if(i==j) matrix[i][j] = 0;
+	        }
+	    }
+	    for(int k = 0;k<n;k++){
+	        for(int i=0;i<n;i++){
+	            for(int j=0;j<n;j++){
+	                matrix[i][j] = min(matrix[i][j], matrix[i][k] + matrix[k][j]);
+	            }
+	        }
+	    }
+	    for(int i=0;i<n;i++){
+	        for(int j=0;j<n;j++){
+	            if(matrix[i][j]==1e9){
+	                matrix[i][j] = -1;
+	            }
+	        }
+	    }
+	}
+
+>> HOW FLOYD WARSHALL DETECTS NEGATIVE LOOP : The distance of a node from itself should be zero, but in case of negative cycles in the graph, this is violated. Hence we
+                                              can detect negative cycles.
+
+82)*****************MINIMUM SPANNING TREE*****************************
+
+>> Spanning tree : A tree in which we have n nodes and n-1 edges, and all nodes are reachable from each other is called a spanning tree.
+
+>> MINIMUM SPANNING TREE(MST) : Spanning tree with lease sum of edge weights is called a MINIMUM SPANNING TREE(MST).
+
+>> A graph can have more than 1 MST, but the minimum sum is unique(obvious).
+
+>> Formula for no.of possible spanning trees : |E|C|v-1| - no.of cycles .
+
+>> We cannot find spanning trees for non connected graphs, or more properly, a graph with more than one connected components.
+
+83)***************** PRIMS ALGORITHM ************************ https://www.youtube.com/watch?v=mJcZjjKzeqk&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=45 ********
+
+Procedure : 
+
+  >> First take the shortest possible edge from the graph, then consider the shortest edge connected to the already selected nodes. Follow this until all the nodes are 
+     reached with nodes-1 edges.
+ 
+CODE : 
+
+ int spanningTree(int v, vector<vector<int>> adj[])
+    {
+        // code here
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+        vector<int> vis(v,0);
+        // wt,node
+        pq.push({0,0});
+        int sum = 0;
+        while(!pq.empty()){
+            auto it = pq.top();
+            pq.pop();
+            int node = it.second;
+            int wt = it.first;
+            
+            if(vis[node]==1) continue;
+            // Pushing the node into MST
+            vis[node] = 1;
+            sum += wt;
+            // traversing the adjacent nodes
+            for(auto it : adj[node]){V 
+                int adjnode = it[0];
+                int edw = it[1];
+                if(!vis[adjnode]){
+                    pq.push({edw,adjnode});
+                }
+            }
+        }
+        return sum;
+    }
+
+
+84) ************* DISJOINT SET ******************** https://www.youtube.com/watch?v=aBxjDBC4M1U **********************
+
+>> Why we use DISJOINT SET : If we want to know whether two nodes are reachable from each other or not in O(constant) time, we use disjoint set.
+>> Used in Dynamic graphs.
+>> Contains findParent() and UnionbyRank()/UnionbySize().
+
+>> Parent array : Initially parent of all the nodes is the node itself.
+>> Rank array : Initially all the indexes of rank array are 0.
+>> Size array : Initially all the indexes of size array are 1.
+
+>> TIME COMPLEXITY OF DISJOINT SET : The time complexity if O(4alpha) , which is nearly equal to O(constant).
+
+CLASS OF DISJOINT SET : 
+
+         class DisjointSet{
+    vector<int> rank,parent,size;
+    
+    public :
+           DisjointSet(int n){     // constructor
+               rank.resize(n+1,0); // n+1 so that we can use it for both 0-based and 1-based indexing
+               parent.resize(n+1);
+               size.resize(n+1,1);
+               for(int i=0;i<=n;i++){
+                   parent[i] = i;
+               }
+           }
+           
+           int findUPar(int node){
+               if(node == parent[node]){         // path compression
+                   return node;
+               }
+               return parent[node] = findUPar(parent[node]);
+           }
+           
+           void unionByRank(int u,int v){
+               int ulp_u = findUPar(u);
+               int ulp_v = findUPar(v);
+               if(ulp_u == ulp_v) return;
+               if(rank[ulp_u] < rank[ulp_v]){
+                   parent[ulp_u] = ulp_v;
+               }
+               else if(rank[ulp_v] < rank[ulp_u]){
+                   parent[ulp_v] = ulp_u;
+               }
+               else{
+                   parent[ulp_v] = ulp_u;
+                   rank[ulp_u]++;
+               }
+           }
+           
+           void UnionBySize(int u,int v){
+               int ulp_u = findUPar(u);
+               int ulp_v = findUPar(v);
+               if(ulp_u == ulp_v) return;
+               if(size[ulp_u] < size[ulp_v]){
+                   parent[ulp_u] = ulp_v;
+                   size[ulp_v] += size[ulp_u];
+               }
+               else{
+                   parent[ulp_v] = ulp_u;
+                   size[ulp_u] += size[ulp_v];
+               }
+            }
+};  
+
+85) ************************KRUSKAL'S ALGORITHM ************** https://www.youtube.com/watch?v=DMnDM_sxVig ********************
+
+Procedure : In this algorithm basically we take the edges in the ascending order of the edge weights, and we consider the current edge if and only if it doesn't form 
+            a cycle, that is the ultimate parent the of both the nodes of that edge are different in the disjoint set.
+
+
+CODE : 
+
+       int spanningTree(int v,vector<vector<int>> adj[]){
+        vector<pair<int,pair<int,int>>> edges;
+        for(int i=0;i<v;i++){
+            for(auto it : adj[i]){
+                int adjnode = it[0];
+                int wt = it[1];
+                int node = i;
+                edges.push_back({wt,{node,adjnode}});
+            }
+        }
+        DisjointSet ds(v);
+        sort(edges.begin(),edges.end());
+        int minwt = 0;
+        for(auto it : edges){
+            int wt = it.first;
+            int u = it.second.first;
+            int vdash = it.second.second;
+            if(ds.findUPar(u) != ds.findUPar(vdash)){
+                minwt += wt;
+                ds.UnionBySize(u,vdash);
+            }
+        }
+        return minwt;
+    }
+
+86) Q) Find the city with the smallest number of neighbours at a threshold distance -> https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/
+
+Ans) BASED ON FLOYD WARSHALL ALGORITHM : 
+
+     i) My solution : 
+
+        int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
+        vector<vector<int>> matrix(n,vector<int> (n,1e9));
+        for(int i=0;i<edges.size();i++){
+            matrix[edges[i][0]][edges[i][1]] = edges[i][2];
+            matrix[edges[i][1]][edges[i][0]] = edges[i][2];
+        }
+        for(int i=0;i<n;i++){
+            matrix[i][i] = 0;
+        }
+        for(int k=0;k<n;k++){
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                    matrix[i][j] = min(matrix[i][j] , matrix[i][k] + matrix[k][j]);
+                }
+            }
+        }
+        int ans=INT_MAX;
+        int node = 0;
+        int count = 0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(i!=j && matrix[i][j]<=distanceThreshold){
+                    count++;
+                }
+            }
+            if(count<=ans){
+                ans = count;
+                node = i;
+            }
+            count = 0;
+        }
+        return node;
+    }
+
+87) Q) Number of operations to make network connected -> https://leetcode.com/problems/number-of-operations-to-make-network-connected/
+
+Ans) The approach is that we have a total of 'n' computers, so 'n-1' edges in total is the minimum required ,if that's not the case we return -1. So if the no.of total
+     edges is greater than n-1, then we use disjoint set to find the no.of connected components, then the answer would be (connected components - 1).
+
+
+88) Q) Most stones removed with same row or column -> https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/
+
+Ans) The approach is the main thing and this problem is very important.......***********************************
+
+    Approach : We basically connect the rows and columns of the nodes in the same row or column, so that we can get the desired disjoint set. The main trick here is 
+               understanding how to use disjoint set, because the no.of rows and columns is very large (1e4 each).
+
+    CODE : 
+
+           int removeStones(vector<vector<int>>& stones){
+        int maxRow = 0;
+        int maxCol = 0;
+        for(auto it : stones){
+            maxRow = max(maxRow,it[0]);
+            maxCol = max(maxCol,it[1]);
+        }
+        DisjointSet ds(maxRow + maxCol + 1);
+        unordered_map<int,int> stoneNodes;
+        for(auto it : stones){
+            int nodeRow = it[0];
+            int nodeCol = it[1] + maxRow + 1;
+            ds.UnionBySize(nodeRow,nodeCol);
+            stoneNodes[nodeRow] = 1;
+            stoneNodes[nodeCol] = 1;
+        }
+        int cnt = 0;
+        for(auto it : stoneNodes){
+            if(ds.findUPar(it.first) == it.first){
+                cnt++;
+            }
+        }
+        return stones.size() - cnt;
+    }
+
+89) Q) Preorder Traversal -> https://leetcode.com/problems/binary-tree-preorder-traversal/description/
+
+Ans) i) General approach(recursion) : 
+
+        vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        preorder(root,ans);
+        return ans;
+    }
+
+    void preorder(TreeNode* root,vector<int>& ans){
+        if(root==NULL){
+            return;
+        }
+        ans.push_back(root->val);
+        preorder(root->left,ans);
+        preorder(root->right,ans);
+        return;
+    }
+
+  
+    ii) Iterative approach :
+
+         vector<int> preorderTraversal(TreeNode* root){
+        vector<int> preorder;
+        if(root == NULL) return preorder;
+        stack<TreeNode*> st;
+        st.push(root);
+        while(!st.empty()){
+            root = st.top();
+            st.pop();
+            preorder.push_back(root->val);
+            if(root->right!=NULL){
+                st.push(root->right);
+            }
+            if(root->left != NULL){
+                st.push(root->left);
+            }
+        }
+        return preorder;
+    }
+
+    iii) MORRIS TRAVERSAL : (NOT IMPORTANT FOR INTERVIEW) : 
+
+        vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> answer;
+        TreeNode* curr = root;
+        TreeNode* last;
+        
+        while (curr != nullptr) {
+            // If there is no left child, go for the right child.
+            // Otherwise, find the last node in the left subtree. 
+            if (curr->left == nullptr) {
+                answer.push_back(curr->val);
+                curr = curr->right;
+            } else {
+                last = curr->left;
+                while (last->right != nullptr && last->right != curr) {
+                    last = last->right;
+                }
+                
+                // If the last node is not modified, we let 
+                // 'curr' be its right child. Otherwise, it means we 
+                // have finished visiting the entire left subtree.
+                if (last->right == nullptr) {
+                    answer.push_back(curr->val);
+                    last->right = curr;
+                    curr = curr->left;
+                } else {
+                    last->right = nullptr;
+                    curr = curr->right;
+                }
+            }
+        }
+        return answer;
+    }
+
+90) Q) Inorder Traversal (ITERATIVE APPROACH) : 
+
+Ans) 
+
+     vector<int> inorderTraversal(TreeNode* root){
+        vector<int> ans;
+        stack<TreeNode*> st;
+        TreeNode* node = root;
+        while(true){
+            if(node!=NULL){
+                st.push(node);
+                node = node->left;
+            }
+            else{
+                if(st.empty() == true) break;
+                node = st.top();
+                st.pop();
+                ans.push_back(node->val);
+                node = node->right;
+            }
+        }
+        return ans;   
+    }
+
+    ii) Morris Traversal Approach : 
+
+            vector<int> inorderTraversal(TreeNode* root){
+        vector<int> inorder;
+        TreeNode* cur = root;
+        while(cur!=NULL){
+            if(cur->left==NULL){
+                inorder.push_back(cur->val);
+                cur = cur->right;
+            }
+            else{
+                TreeNode* prev = cur->left;
+                while(prev->right && prev->right!=cur){
+                    prev = prev->right;
+                }
+                if(prev->right == NULL){
+                    prev->right = cur;
+                    cur = cur->left;
+                }
+                else{
+                    prev->right = NULL;
+                    inorder.push_back(cur->val);
+                    cur = cur->right;
+                }
+            }
+        }
+        return inorder;
+    }
+
+
+91) Q) Postorder Traversal (ITERATIVE APPROACH ) : https://leetcode.com/problems/binary-tree-postorder-traversal/
+
+Ans) 
+
+      i) Using 2 Stack approach : 
+
+         // vector<int> postorderTraversal(TreeNode* root){
+    //     vector<int> ans;
+    //     if(root == NULL) return ans;
+    //     stack<TreeNode*> st1,st2;
+    //     st1.push(root);
+    //     while(!st1.empty()){
+    //         root = st1.top();
+    //         st1.pop();
+    //         st2.push(root);
+    //         if(root->left != NULL){
+    //             st1.push(root->left);
+    //         }
+    //         if(root->right != NULL){
+    //             st1.push(root->right);
+    //         }
+    //     }
+    //     while(!st2.empty()){
+    //         ans.push_back(st2.top()->val);
+    //         st2.pop();
+    //     }
+    //     return ans;
+    // }
+
+      ii) Using 1 stack approach : 
+
+          vector<int> postorderTraversal(TreeNode* root){
+        vector<int> ans;
+        stack<TreeNode*> st;
+        TreeNode* cur = root,*temp;
+        while(cur!=NULL || !st.empty()){
+            if(cur!=NULL){
+                st.push(cur);
+                cur = cur->left;
+            }
+            else{
+                temp = st.top()->right;
+                if(temp == NULL){
+                    temp = st.top();
+                    st.pop();
+                    ans.push_back(temp->val);
+                    while(!st.empty() && temp == st.top()->right){
+                        temp = st.top();
+                        st.pop();
+                        ans.push_back(temp->val);
+                    }
+                }
+                else{
+                    cur = temp;
+                }
+            }
+        }
+        return ans;
+    } 
+
+    iii) Morris Traversal Approach : (Its similar to preorder but here we have to do for (ROOT RIGHT LEFT) and then reverse the postorder at the end before we return it).
+
+         vector<int> postorderTraversal(TreeNode* root){
+        vector<int> postorder;
+        TreeNode* cur = root;
+        while(cur!=NULL){
+            if(cur->right==NULL){
+                postorder.push_back(cur->val);
+                cur = cur->left;
+            }
+            else{
+                TreeNode* prev = cur->right;
+                while(prev->left!=NULL && prev->left!=cur){
+                    prev = prev->left;
+                }
+                if(prev->left==NULL){
+                    postorder.push_back(cur->val);
+                    prev->left = cur;
+                    cur = cur->right;
+                }
+                else{
+                    prev->left = NULL;
+                    cur = cur->left;
+                }
+            }
+        }
+        reverse(postorder.begin(),postorder.end());
+        return postorder;
+    }
+
+
+92) Q) Level order traversal of a binary tree (BFS TRAVERSAL ON A BT)-> https://leetcode.com/problems/binary-tree-level-order-traversal/description/
+
+Ans) 
+
+         vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        queue<TreeNode*> q;
+        if(root!=NULL) q.push(root);
+        while(!q.empty()){
+            vector<int> v;
+            int n = q.size();
+            for(int i=0;i<n;i++){
+               TreeNode* node = q.front();
+               q.pop();
+               v.push_back(node->val);
+               if(node->left!=NULL){
+                   q.push(node->left);
+               }
+               if(node->right!=NULL){
+                   q.push(node->right);
+               }
+            }
+            ans.push_back(v);
+        }
+        return ans;
+    }
+
+93)***Preorder, Inorder and Postorder traversals in only one traversal (vv imp I guess) 
+
+Ans) 
+          vector<int> preInPostTraversal(TreeNode* root){
+        stack<pair<TreeNode*,int>> st;
+        st.push({root,1});
+        vector<int> pre,in,post;
+        if(root == NULL) return;
+        while(!st.empty()){
+            auto it = st.top();
+            st.pop();
+            // this is part of pre
+            // increment 1 to 2
+            // push the left side of the tree
+            if(it.second == 1){
+                pre.push_back(it.first->val);
+                it.second ++;
+                st.push(it);
+                if(it.first->left != NULL){
+                    st.push({it.first->right,1});
+                }
+            }
+            // this is a part of in 
+            // increment 2 to 3
+            // push right
+            else if(it.second == 2){
+                in.push_back(it.first->val);
+                it.second++;
+                st.push(it);
+                if(it.first->right != NULL){
+                    st.push({it.first->right,1});
+                }
+            }
+            //don't push it back again
+            else{
+                post.push_back(it.first->val);
+            }
+        }
+    }
+
+94) Q) Find the number of Islands -> https://practice.geeksforgeeks.org/problems/find-the-number-of-islands/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=find-the-number-of-islands
+
+Ans) i) Normal BFS approach : Obvious
+
+     ii) Disjoint set approach : 
+
+              // int numIslands(vector<vector<char>>& grid){
+    //     int m = grid.size();
+    //     int n = grid[0].size();
+    //     DisjointSet ds(m*n - 1);
+    //     pair<int,int> p[8] = {{0,-1},{-1,-1},{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1}};
+    //     for(int i=0;i<m;i++){
+    //         for(int j=0;j<n;j++){
+    //             if(grid[i][j]=='1'){
+    //                 for(int k=0;k<8;k++){
+    //                     int x = i + p[k].first;
+    //                     int y = j + p[k].second;
+    //                     if(0<=x && x<m && 0<=y && y<n && grid[x][y]=='1'){
+    //                       ds.UnionBySize(i*n + j,x*n + y);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     int cnt = 0;
+    //     for(int i=0;i<m;i++){
+    //         for(int j=0;j<n;j++){
+    //             if((grid[i][j]=='1') && (ds.findUPar(i*n + j)==i*n + j)) cnt++;
+    //         }
+    //     }
+    //     return cnt;
+    // }
+
+95) Q) Max depth of a binary tree -> https://leetcode.com/problems/maximum-depth-of-binary-tree/description/
+
+Ans) 
+
+    i) // Recursive approach (DFS)
+
+    int maxDepth(TreeNode* root) {
+        if(root==NULL){
+            return 0;
+        }
+        return 1 + max(maxDepth(root->left),maxDepth(root->right));
+    }
+
+    ii) // Iterative approach(Level Order Traversal)(BFS)
+
+    int maxDepth(TreeNode* root){
+        int level = 0;
+        queue<TreeNode*> q;
+        if(root!=NULL) q.push(root);
+        while(!q.empty()){
+            level++;
+            int n = q.size();
+            for(int i=0;i<n;i++){
+                auto node = q.front();
+                q.pop();
+                if(node->left!=NULL) q.push(node->left);
+                if(node->right!=NULL) q.push(node->right);
+            }
+        }
+        return level;      
+    }
+
+96) Q) Balanced binary tree -> https://leetcode.com/problems/balanced-binary-tree/description/
+
+Ans) 
+
+    i) // O(N^2) solution
+
+    bool isBalanced(TreeNode* root) {
+        if(root == NULL) return true;
+        int ld = 1 + height(root->left);
+        int rd = 1 + height(root->right);
+        if(abs(rd-ld)>1) return false;
+        if(!isBalanced(root->left) || !isBalanced(root->right)) return false;
+        // return abs(rd-ld) <= 1 ? true : false;
+        return true;
+    }
+
+    int height(TreeNode* root){
+        if(root==NULL) return -1;
+        return 1 + max(height(root->left),height(root->right));
+    }
+
+    ii) // O(N) solution
+
+    bool isBalanced(TreeNode* root){
+        return height(root) != -1;
+    }
+
+    int height(TreeNode* root){
+        if(root==NULL) return 0;
+        int lh = height(root->left);
+        if(lh==-1) return -1;
+        int rh = height(root->right);
+        if(rh==-1) return -1;
+        if(abs(rh-lh)>1) return -1;
+        return 1 + max(lh,rh);
+    }
+
+97) Q) Maximum Path Sum -> https://leetcode.com/problems/binary-tree-maximum-path-sum/description/
+
+Ans) i) First implementation :
+
+       // int maxPathSum(TreeNode* root){
+    //     int ans = INT_MIN;
+    //     maxsum(root,ans);
+    //     return ans;
+    // }
+
+    // int maxsum(TreeNode* root,int& ans){
+    //     if(root==NULL) return 0;
+    //     int ls = maxsum(root->left,ans);
+    //     int rs = maxsum(root->right,ans);
+    //     int maxii = max(root->val,root->val + ls);
+    //     maxii = max(maxii,root->val + rs);
+    //     maxii = max(maxii,root->val + ls + rs);
+    //     if(maxii > ans) ans = maxii;
+    //     int maxi  = max(ls,rs);
+    //     return maxi < 0 ? root->val : root->val + maxi;
+    // }
+
+    ii) More proper implementation : 
+
+    int maxPathSum(TreeNode* root){
+        int ans = INT_MIN;
+        maxsum(root,ans);
+        return ans;
+    }
+
+    int maxsum(TreeNode* root,int& ans){
+        if(root==NULL) return 0;
+        int ls = max(0,maxsum(root->left,ans));
+        int rs = max(0,maxsum(root->right,ans));
+        ans = max(ans, root->val + ls + rs);
+        return root->val + max(ls,rs);
+    }
+
+98) Q) Same Tree (Check if two trees are identical or not) -> https://leetcode.com/problems/same-tree/description/
+
+Ans) i) Level order traversal approach (NOT OPTIMAL) :
+
+         // bool isSameTree(TreeNode* p, TreeNode* q) {
+    //     vector<vector<int>> P,Q;
+    //     P = levelordertraversal(p);
+    //     Q = levelordertraversal(q);
+    //     if(P==Q) return true;
+    //     else return false;
+    // }
+
+    // vector<vector<int>> levelordertraversal(TreeNode* root){
+    //     vector<vector<int>> levelorder;
+    //     int x = 1e4+1;
+    //     queue<TreeNode*> q;
+    //     q.push(root);
+    //     while(!q.empty()){
+    //         vector<int> level;
+    //         int n = q.size();
+    //         for(int i=0;i<n;i++){
+    //             auto node = q.front();
+    //             q.pop();
+    //             if(node==NULL){
+    //                 level.push_back(x);
+    //                 continue;
+    //             }
+    //             level.push_back(node->val);
+    //             q.push(node->left);
+    //             q.push(node->right);
+    //         }
+    //         levelorder.push_back(level);
+    //     }
+    //     return levelorder;
+    // }
+
+        
+     ii) Optimal approach : 
+
+         bool isSameTree(TreeNode* p,TreeNode* q){
+        if(p==NULL || q== NULL){
+            return p==q;
+        }
+        return (p->val == q->val) && isSameTree(p->left,q->left) && isSameTree(p->right,q->right);
+        }
+
+99) Q) ZigZag level order Traversal -> https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/
+
+Ans) Approach : It is very much similar to the normal level order traversal, the only modification is that we maintain a boolean flag which is initially true. And while 
+                pushing the node values into the vector, we check for the flag, if its true , we do it Left to Right and if it false, we do it from Right to Left.
+
+     CODE : 
+
+            vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        queue<TreeNode*> q;
+        if(root==NULL) return ans;
+        q.push(root);
+        bool flag = true;
+        while(!q.empty()){
+            int n = q.size();
+            vector<int> level(n);
+            for(int i=0;i<n;i++){
+                TreeNode* node = q.front();
+                q.pop();
+                if(flag){
+                   level[i] = node->val;
+                }
+                else{
+                   level[n-1-i] = node->val; 
+                }
+                if(node->left != NULL) q.push(node->left);
+                if(node->right!= NULL) q.push(node->right);
+            }
+            ans.push_back(level);
+            flag = !flag;
+        }
+        return ans;
+    }
+
+100) Q) Boundary Traversal -> 
+
+Ans) i) My approach (NOT OPTIMAL AND NOT CLEAR) :
+
+     // vector <int> boundary(Node *root)
+    // {
+    //     //Your code here
+    //     vector<int> ans;
+    //     stack<Node*> st;
+    //     if(root==NULL) return ans;
+    //     Node* node;
+    //     if(root->left!=NULL){
+    //         node = root;
+    //     while(node->left!=NULL || node->right!=NULL){
+    //         st.push(node);
+    //         ans.push_back(node->data);
+    //         if(node->left!=NULL) node = node->left;
+    //         else if(node->right!=NULL) node = node->right;
+    //     }
+    //     ans.push_back(node->data);
+    //     while(!st.empty()){
+    //         node = st.top();
+    //         st.pop();
+    //         // if(node == root) break;
+    //         if(node->left!=NULL)
+    //         leafnodes(node->right,ans);
+    //     }
+    //     }
+    //     else{
+    //         ans.push_back(root->data);
+    //     }
+    //     if(root->right == NULL) return ans;
+    //     node = root->right;
+    //     while(node->left != NULL || node->right != NULL){
+    //         st.push(node);
+    //         if(node->right) node = node->right;
+    //         else if(node->left) node = node->left;
+    //     }
+    //     if(root->left==NULL)
+    //     ans.push_back(node->data);
+    //     while(!st.empty()){
+    //         ans.push_back(st.top()->data);
+    //         st.pop();
+    //     }
+    //     return ans;
+    // }
+    
+    // void leafnodes(Node* root,vector<int>& ans){
+    //     if(root==NULL) return;
+    //     if(root->left == NULL && root->right==NULL){
+    //         ans.push_back(root->data);
+    //         return;
+    //     }
+    //     if(root->left){
+    //         leafnodes(root->left,ans);
+    //     }
+    //     if(root->right){
+    //         leafnodes(root->right,ans);
+    //     }
+    //     return;
+    // }
+    
+
+    ii) Striver's approach (OPTIMAL) : 
+    
+    vector<int> boundary(Node* root){
+        vector<int> res;
+        if(!root) return res;
+        if(!isLeaf(root)) res.push_back(root->data);
+        addLeftBoundary(root,res);
+        addLeaves(root,res);
+        addRightBoundary(root,res);
+        return res;
+    }
+    
+    void addLeftBoundary(Node* root,vector<int>& res){
+        Node* cur = root->left;
+        while(cur){
+            if(!isLeaf(cur)) res.push_back(cur->data);
+            if(cur->left) cur = cur->left;
+            else cur = cur->right;
+        }
+    }
+    
+    void addRightBoundary(Node* root,vector<int>& res){
+        Node* cur = root->right;
+        vector<int> temp;
+        while(cur){
+            if(!isLeaf(cur)) temp.push_back(cur->data);
+            if(cur->right) cur = cur->right;
+            else cur = cur->left;
+        }
+        for(int i=temp.size()-1;i>=0;i--){
+            res.push_back(temp[i]);
+        }
+    }
+    
+    void addLeaves(Node* root,vector<int>& res){
+        if(isLeaf(root)){
+            res.push_back(root->data);
+            return;
+        }
+        if(root->left) addLeaves(root->left,res);
+        if(root->right) addLeaves(root->right,res);
+    }
+    
+    bool isLeaf(Node* root){
+        if(root->left ==NULL && root->right==NULL) return true;
+        return false;
+    }
+
+101) Q) Vertical Order Traversal -> https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/
+
+Ans) i) Striver's solution : 
+
+         vector<vector<int>> verticalTraversal(TreeNode* root){
+        map<int,map<int,multiset<int>>> nodes;
+        queue<pair<TreeNode*,pair<int,int>>> todo;
+        todo.push({root,{0,0}});
+        while(!todo.empty()){
+            auto p = todo.front();
+            todo.pop();
+            TreeNode* node = p.first;
+            int x = p.second.first, y = p.second.second;
+            nodes[x][y].insert(node->val);
+            if(node->left){
+                todo.push({node->left,{x-1,y+1}});
+            }
+            if(node->right){
+                todo.push({node->right,{x+1,y+1}});
+            }
+        }
+        vector<vector<int>> ans;
+        for(auto p : nodes){
+            vector<int> col;
+            for(auto q : p.second){
+                col.insert(col.end(),q.second.begin(),q.second.end());
+            }
+            ans.push_back(col);
+        }
+        return ans;
+    }
+
+102) Q) Top view of binary tree -> https://practice.geeksforgeeks.org/problems/top-view-of-binary-tree/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=top-view-of-binary-tree
+
+Ans) Approach : The first node on every vertical line will be there in the top view.
+
+     vector<int> topView(Node *root)
+    {
+        //Your code here
+        vector<int> ans;
+        if(root==NULL) return ans;
+        queue<pair<Node*,int>> q;
+        map<int,int> m;
+        q.push({root,0});
+        while(!q.empty()){
+            Node* node = q.front().first;
+            int vertical = q.front().second;
+            q.pop();
+            if(m[vertical]==0){
+                m[vertical] = node->data;
+            }
+            if(node->left) q.push({node->left,vertical-1});
+            if(node->right) q.push({node->right,vertical+1});
+        }
+        for(auto verticals : m){
+            ans.push_back(verticals.second);
+        }
+        return ans;
+    }
+
+103) Q) Right/Left (Side) view of a binary tree -> https://leetcode.com/problems/binary-tree-right-side-view/description/
+
+Ans) i) Iterative (LEVEL ORDER TRAVERSAL) Approach : 
+
+         // vector<int> rightSideView(TreeNode* root) {
+    //     queue<TreeNode*> q;
+    //     vector<int> ans;
+    //     if(root == NULL) return ans;
+    //     q.push(root);
+    //     TreeNode* node;
+    //     while(!q.empty()){
+    //         int n = q.size();
+    //         while(n--){
+    //            node = q.front();
+    //            q.pop();
+    //            if(node->left) q.push(node->left);
+    //            if(node->right) q.push(node->right);
+    //         }
+    //         ans.push_back(node->val);
+    //     }
+    //     return ans;
+    // }
+
+    ii) Recursive ( Root Right Left ) APPROACH : (KIND OF BETTER THAN LEVEL ORDER TRAVERSAL BECAUSE OF SPACE COMPLEXITY)
+
+        vector<int> rightSideView(TreeNode* root){
+        vector<int> ans;
+        TreeNode* node = root;
+        recursion(root,0,ans);
+        return ans;
+    }
+
+    void recursion(TreeNode* root,int level,vector<int> & ans){
+        if(root==NULL) return;
+        if(ans.size()==level) ans.push_back(root->val);
+        recursion(root->right,level+1,ans);
+        recursion(root->left,level+1,ans);
+    }
+
+104) Q) Check if the binary tree is Symmetric about its root -> 
+
+Ans) i) Level order traversal approach : 
+
+        bool isSymmetric(TreeNode* root) {
+        if(root==NULL) return true;
+        queue<TreeNode*> p,q;
+        TreeNode* node1=NULL,*node2=NULL;
+        if(root->left){
+            node1 = root->left;
+            p.push(root->left);
+        }
+        if(root->right){
+            node2 = root->right;
+            q.push(root->right);
+        }
+        if(node1==NULL || node2==NULL) return node1==node2;
+        if(node1->val != node2->val) return false;
+        while(!q.empty() && !p.empty()){
+           node1 = p.front();
+           node2 = q.front();
+           p.pop();
+           q.pop();
+           if(node1->left!=NULL){
+               if(node2->right==NULL || node1->left->val!=node2->right->val) return false;
+               p.push(node1->left);
+               q.push(node2->right);  
+           }
+           else{
+               if(node2->right!=NULL) return false;
+           }
+           if(node1->right!=NULL){
+               if(node2->left==NULL || node1->right->val!=node2->left->val) return false;
+               p.push(node1->right);
+               q.push(node2->left);
+           }
+           else{
+               if(node2->left!=NULL) return false;
+           }
+        }
+        return true;
+    }
+
+    ii) Striver's recursive approach : 
+
+        bool isSymmetric(TreeNode* root){
+        return root==NULL || isSymmetricHelp(root->left,root->right);
+    }
+
+    bool isSymmetricHelp(TreeNode* left,TreeNode* right){
+        if(left==NULL || right==NULL) return left==right;
+        if(left->val != right->val) return false;
+        return isSymmetricHelp(left->left,right->right) && isSymmetricHelp(left->right,right->left);
+    }
+
+
+105) Q) Find path from root to the give node -> https://www.interviewbit.com/problems/path-to-given-node/
+
+Ans) i) Simple recursive approach : 
+
+        bool mysolution(TreeNode* node,int B,vector<int>& ans){
+    if(node==NULL) return false;
+    ans.push_back(node->val);
+    if(node->val == B) return true;
+    if(mysolution(node->left,B,ans)) return true;
+    if(mysolution(node->right,B,ans)) return true;
+    ans.pop_back();
+    return false;
+}
+vector<int> Solution::solve(TreeNode* A, int B) {
+    vector<int> ans;
+    if(A==NULL) return ans;
+    mysolution(A,B,ans);
+    return ans;
+}
+
+106) Q) Lowest Common Ancestor -> https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/
+
+Ans) i) My solution : 
+
+         //     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+//         vector<TreeNode*> path1 = solve(root,p);
+//         vector<TreeNode*> path2 = solve(root,q);
+//         int len = min(path1.size(),path2.size());
+//         for(int i=0;i<len;i++){
+//             if(path1[i]!=path2[i]) return path1[i-1]; 
+//         }
+//         if(path1.size()<=path2.size()){
+//             return path1[len-1];
+//         }
+//         else{
+//             return path2[len-1];
+//         }
+//     }
+
+//     bool mysolution(TreeNode* node,TreeNode* B,vector<TreeNode*>& ans){
+//     if(node==NULL) return false;
+//     ans.push_back(node);
+//     if(node == B) return true;
+//     if(mysolution(node->left,B,ans)) return true;
+//     if(mysolution(node->right,B,ans)) return true;
+//     ans.pop_back();
+//     return false;
+// }
+// vector<TreeNode*> solve(TreeNode* A, TreeNode* B) {
+//     vector<TreeNode*> ans;
+//     if(A==NULL) return ans;
+//     mysolution(A,B,ans);
+//     return ans;
+// }
+
+        
+     ii) Striver's solution : 
+
+          TreeNode* lowestCommonAncestor(TreeNode* root,TreeNode* p,TreeNode* q){
+        // base case 
+        if(root == NULL || root == p || root == q){
+            return root;
+        }
+        TreeNode* left = lowestCommonAncestor(root->left,p,q);
+        TreeNode* right = lowestCommonAncestor(root->right,p,q);
+        //result
+        if(left == NULL){
+            return right;
+        }
+        else if(right == NULL){
+            return left;
+        }
+        else{
+            return root;
+        }
+    }
+
+107) Q) Maximum width of the Binary Tree (INDEXING THE NODES OF A BINARY TREE) -> https://leetcode.com/problems/maximum-width-of-binary-tree/
+
+Ans) Approach : INDEXING THE NODES OF A BINARY TREE APPROACH, here i used o-based indexing and the width of a level is equal to (last - first + 1). But there will be 
+                a problem of overflow, so we have done the appropriate step for that. 
+
+                0-based indexing : if index of current node is 'i', then left node is '2*i + 1' and right node is '2*i + 2'.
+                1-based indexing : if index of current node is 'i', then left node is '2*i' and right node is '2*i + 1'.
+
+    CODE :
+
+             int widthOfBinaryTree(TreeNode* root){
+        if(!root) return 0;
+        int ans = 0;
+        queue<pair<TreeNode*,int>> q;
+        q.push({root,0});
+        while(!q.empty()){
+            int size = q.size();
+            long long int min = q.front().second;
+            int first,last;
+            for(int i=0;i<size;i++){
+                long long int cur_id = q.front().second - min;
+                TreeNode* node = q.front().first;
+                q.pop();
+                if(i==0) first = cur_id;
+                if(i==size-1) last = cur_id;
+                if(node->left) q.push({node->left,cur_id*2+1});
+                if(node->right) q.push({node->right,cur_id*2+2});
+            }
+            ans = max(ans,last-first+1);
+        }
+        return ans;
+    }
+
+108) Q) Converting an arbituary binary tree into a binary tree which satisfies children sum property -> https://www.youtube.com/watch?v=fnmisPM6cVo
+                                                                                                     -> https://www.geeksforgeeks.org/convert-an-arbitrary-binary-tree-to-a-tree-that-holds-children-sum-property/
+
+Ans) i) O(N^N) approach : Available on gfg
+
+     ii) O(N) approach : Available on youtube take u forward
+
+109) Q) Print all nodes at a distance K from the target node -> https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/submissions/
+
+Ans) i) My solution (MY SOLUTION ACTUALLY GIVES DISTANCES FROM ANY NODE TO ANY NODE) : 
+
+        // vector<int> distanceK(TreeNode* root, TreeNode* Target, int k) {
+    //     unordered_map<int,map<int,int>> m;
+    //     vector<int> ans;
+    //     if(root==NULL) return ans;
+    //     levelorder(root,m);
+    //     int target = Target->val;
+    //     for(auto targetelem : m[target]){
+    //         int node = targetelem.first;
+    //         int dist = targetelem.second;
+    //         if(dist==k) ans.push_back(node);
+    //     }
+    //     return ans;
+    // }
+
+    // void levelorder(TreeNode* root,unordered_map<int,map<int,int>>& m){
+    //     queue<TreeNode*> q;
+    //     unordered_map<int,int> mdash;
+    //     q.push(root);
+    //     mdash[root->val] = 1;
+    //     while(!q.empty()){
+    //         TreeNode* node = q.front();
+    //         q.pop();
+    //     m[node->val][node->val] = 0;
+    //     for(auto it : m[node->val]){
+    //         int dist = 1 + m[node->val][it.first];
+    //         if(node->left){
+    //             m[node->left->val][it.first] = dist;
+    //             m[it.first][node->left->val] = dist;
+    //             if(mdash[node->left->val]==0){
+    //                 q.push(node->left);
+    //                 mdash[node->left->val] = 1;
+    //             }
+    //         }
+    //         if(node->right){
+    //             m[node->right->val][it.first] = dist;
+    //             m[it.first][node->right->val] = dist;
+    //             if(mdash[node->right->val]==0){
+    //                 q.push(node->right);
+    //                 mdash[node->right->val] = 1;
+    //             }
+    //         }
+    //     }
+    //     }
+    // }
+
+     ii) Striver's solution : 
+
+         void markParents(TreeNode* root,unordered_map<TreeNode*,TreeNode*> &parent_track,TreeNode* target){
+        queue<TreeNode*> queue;
+        queue.push(root);
+        while(!queue.empty()){
+            TreeNode* current = queue.front();
+            queue.pop();
+            if(current->left){
+                parent_track[current->left] = current;
+                queue.push(current->left);
+            }
+            if(current->right){
+                parent_track[current->right] = current;
+                queue.push(current->right);
+            }
+        }
+    }
+
+    vector<int> distanceK(TreeNode* root,TreeNode* target,int k){
+        unordered_map<TreeNode*,TreeNode*> parent_track; // node->parent
+        markParents(root,parent_track,target);
+        unordered_map<TreeNode*,bool> visited;
+        queue<TreeNode*> queue;
+        queue.push(target);
+        visited[target] = true;
+        int curr_level = 0;
+        // second BFS to go upto K level from target node and using out hashtable info
+        while(!queue.empty()){
+           int size = queue.size();
+           if(curr_level++ == k) break;
+           for(int i=0;i<size;i++){
+               TreeNode* current = queue.front();
+               queue.pop();
+               if(current->left && !visited[current->left]){
+                   queue.push(current->left);
+                   visited[current->left] = true;
+               }
+               if(current->right && !visited[current->right]){
+                   queue.push(current->right);
+                   visited[current->right] = true;
+               }
+               if(parent_track[current] && !visited[parent_track[current]]){
+                   queue.push(parent_track[current]);
+                   visited[parent_track[current]] = true;
+               }
+           }
+        }
+        vector<int> result;
+        while(!queue.empty()){
+            TreeNode* current = queue.front();
+            queue.pop();
+            result.push_back(current->val);
+        }
+        return result;
+    }
+
+110) Q) Count the no.of nodes in a complete binary tree -> https://leetcode.com/problems/count-complete-tree-nodes/submissions/
+
+Ans) Approach : Basically in this question we find the left height and right height of the current node and if they are equal 2^h - 1 would be the no.of nodes in that 
+                particular binary tree. If both the heights are not equal then we do (1 + recursion(node->left) + recursion(node->right) ).
+
+                NOTE : In this question finding height is slightly different.
+                       >> To find the left height we do node=node->left at all levels.
+                       >> To find the right height we do node=node->right at all levels.
+
+
+111) Q) Constructing Binary tree from inorder and preorder -> https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/
+
+Ans) Approach : Its simple and obvious
+
+     CODE : 
+
+             TreeNode* buildTree(vector<int>& preorder,vector<int>& inorder){
+        map<int,int> inmap;
+        for(int i=0;i<inorder.size();i++){
+            inmap[inorder[i]] = i;
+        }
+        TreeNode* root = buildTree(preorder,0,preorder.size()-1,inorder,0,inorder.size()-1,inmap);
+        return root;
+    }
+
+    TreeNode* buildTree(vector<int>& preorder,int prestart,int preend,vector<int>& inorder,int instart,int inend,map<int,int>& inmap){
+        if(prestart > preend || instart > inend){
+            return NULL;
+        }
+        TreeNode* root = new TreeNode(preorder[prestart]);
+        int inroot = inmap[root->val];
+        int numsleft = inroot - instart;
+        root->left = buildTree(preorder,prestart+1,prestart+numsleft,inorder,instart,inroot-1,inmap);
+        root->right = buildTree(preorder,prestart+numsleft+1,preend,inorder,inroot+1,inend,inmap);
+        return root;
+    }
+
+    NOTE : My code for the same has some hidden address buffer sanitizer error( check out when possible) .
+
+112)**************** MORRIS TRAVERSAL **************** https://www.youtube.com/watch?v=80Zug6D1_r4 *******************************
+
+Ans) Simple, already done.
+
+113) Q) Flatten Binary Tree -> https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/ ************https://www.youtube.com/watch?v=sWf7k1x9XR4*****
+
+Ans) i) My approach : First I have found the preorder traversal of the binary tree and stored them in a vector. Then I rearranged the nodes in the required form i.e. right
+                      sqewed binary tree and simultaneously updated the value of the nodes in the order of preorder. To rearrange the nodes I wanted the right most node
+                      i.e TreeNode* last, for that i used the initial preorder traversal.
+
+        CODE :
+
+                void flatten(TreeNode* root) {
+        if(root==NULL) return;
+        vector<int> v;
+        TreeNode* last=NULL;
+        preorder(root,v,last);
+        TreeNode* node = root;
+        int i = 0;
+        while(!(node->left==NULL && node->right==NULL)){
+            node->val = v[i];
+            i++;
+            if(node->right==NULL){
+                node->right = node->left;
+                node->left = NULL;
+                while(last->right!=NULL){
+                    last = last->right;
+                }
+            }
+            if(node->left){
+                TreeNode* temp = node->left;
+                node->left = NULL;
+                last->right = temp;
+                while(last->right!=NULL){
+                    last = last->right;
+                }
+            }
+            node = node->right;
+        }
+        node->val = v[i];
+    }
+
+    void preorder(TreeNode* root,vector<int>& v,TreeNode* &last){
+        if(root == NULL){
+            return;
+        }
+        last = root;
+        v.push_back(root->val);
+        preorder(root->left,v,last);
+        preorder(root->right,v,last);
+        return;
+    }
+
+    ii) Recursive ( Reverse Postorder approach of Striver) : 
+
+         void flatten(TreeNode* root){
+        TreeNode* prev = NULL;
+        solve(root,prev);
+    }
+    
+    void solve(TreeNode* root,TreeNode* &prev){
+        if(root == NULL){
+            return;
+        }
+        solve(root->right,prev);
+        solve(root->left,prev);
+        root->right = prev;
+        root->left = NULL;
+        prev = root;
+    }
+
+    iii) // Iterative ( Using Stack (Same complexity as recursive approach)):
+    //psuedo code
+
+    // st.push(root);
+    // while(!st.empty()){
+    //     cur = st.top();
+    //     st.pop();
+    //     if(cur->right) st.push(cur->right);
+    //     if(cur->left) st.push(cur->left);
+    //     if(!st.empty()) cur->right = st.top();
+    //     cur->left = NULL;
+    // }
+
+
+    iv) Morris Traversal Approach ( O(N) time complexity and O(1) space complexity ) : 
+
+      // psuedo code
+
+      cur = root;
+    // while(cur!=NULL){
+    //     if(cur->left!=NULL){
+    //         prev = cur->left;
+    //         while(prev->right){
+    //             prev = prev->right;
+    //         }
+    //         prev->right = cur->right;
+    //         cur->right = cur->left;
+    //     }
+    //     cur = cur->right;
+    // } 
+
+
+114) Q) Ceil in BST -> https://practice.geeksforgeeks.org/problems/implementing-ceil-in-bst/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=implementing-ceil-in-bst
+
+Ans) 
+      i) Recursive approach : 
+
+      // int findCeil(Node* root, int input) {
+//     if (root == NULL) return -1;
+//     if(input == root->data) return input;
+//     else if(input>root->data){
+//         return findCeil(root->right,input);
+//     }
+//     else{
+//         Node* prev = root->left;
+//         while(prev!=NULL && prev->right!=NULL){
+//             prev = prev->right;
+//         }
+//         if(prev==NULL || input > prev->data) return root->data;
+//         else if(input == prev->data) return prev->data;
+//         else return findCeil(root->left,input);
+//     }
+//     // Your code here
+    
+// }
+
+   ii) Iterative approach : 
+
+   int findCeil(Node* root,int key){
+       if(root == NULL) return -1;
+       int ceil = -1;
+       while(root){
+       if(root->data == key){
+           ceil = root->data;
+           return ceil;
+       }
+       else if(key > root->data){
+           root = root->right;
+       }
+       else{
+           ceil = root->data;
+           root = root->left;
+       }
+       }
+       return ceil;
+   }
+
+115) Q) Insert a node in a BST -> https://leetcode.com/problems/insert-into-a-binary-search-tree/			
+
+Ans) approach : basically find the node at whose left or right we can place the new node, then insert it accordingly.
+
+         TreeNode* insertIntoBST(TreeNode* root, int val) {
+        // TreeNode* node = new TreeNode(val);
+        if(root==NULL){
+            // return node;
+            return new TreeNode(val);
+        }
+        TreeNode* cur = root;
+        while(true){
+          if(val < cur->val){
+            if(cur->left == NULL){
+                // cur->left = node;
+                cur->left = new TreeNode(val);
+                break;
+            }
+            else{
+                cur = cur->left;
+            }
+          }
+          else{
+            if(cur->right == NULL){
+                // cur->right = node;
+                cur->right = new TreeNode(val);
+                break;
+            }
+            else{
+                cur = cur->right;
+            }
+          }
+        }
+        return root;
+    }
+
+        
+
+
+
+        
+        
+
+    
+ 
+      
+
+    
+
+
+
+
+
+
+
+     
+
+                             
+
+
+
+         
+
+
+
+
+    
+  
+                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
