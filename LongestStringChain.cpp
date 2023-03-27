@@ -4,6 +4,8 @@
 
     // i) My approach (SIMILAR TO LIS):
 
+    // NOTE : We need to use a comparator function in the inbuilt sort in here,to sort the vector of strings according to the length.
+
     static bool comp(string& s1,string& s2){
         return s1.size() < s2.size();
     }
