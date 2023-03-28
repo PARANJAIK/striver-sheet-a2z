@@ -2,7 +2,7 @@
 
     // i) My approach :
 
-    // NOTE: O(n) time and O(1) space approach :
+    // NOTE: O(n) time and O(1) space approach : (IN-PLACE APPROACH)
 
     // string reverseWords(string s) {
     //     reverse(s.begin(),s.end());
@@ -50,3 +50,37 @@
     //     }
     //     return ans;
     // }
+
+    // iii) GFG variant -> https://practice.geeksforgeeks.org/problems/reverse-words-in-a-given-string5459/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=reverse-words-in-a-given-string
+
+    // Ans) 
+
+    // string reverseWords(string s) 
+    // { 
+    //     // code here 
+    //     vector<string> v;
+    //     string t;
+    //     int n = s.size();
+    //     for(int i=0;i<n;i++){
+    //         if(s[i] == '.' && !t.empty()){
+    //             v.push_back(t);
+    //             t.clear();
+    //         }
+    //         else if(s[i] != '.'){
+    //             t.push_back(s[i]);
+    //         }
+    //     }
+    //     if(!t.empty()){
+    //         v.push_back(t);
+    //         t.clear();
+    //     }
+    //     int x = v.size();
+    //     for(int i=x-1;i>=0;i--){
+    //         for(auto ch : v[i]){
+    //             t.push_back(ch);
+    //         }
+    //         t = t + '.';
+    //     }
+    //     t.pop_back();
+    //     return t;
+    // } 
