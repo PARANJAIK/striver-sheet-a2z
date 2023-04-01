@@ -2,7 +2,7 @@
 
     // Ans) 
 
-    // i) Sieve of Eratosthenes:
+    // i) Sieve of Eratosthenes:  O(NloglogN) time complexity
 
     int countPrimes(int n) {
         vector<bool> prime(n,true);
