@@ -1,4 +1,4 @@
- // Q) Sum of Subarray Minimums -> https://leetcode.com/problems/sum-of-subarray-minimums/description/
+// Q) Sum of Subarray Minimums -> https://leetcode.com/problems/sum-of-subarray-minimums/description/
 
     // Ans) 
 
@@ -9,22 +9,45 @@
     // NOTE : WE CAN FIND NLE EVEN BY FINDING PLE BY REVERSE ITERATING THE ARRAY.
     // NOTE : BUT IN THIS QUESTION BOTH PLE AND NLE ARE FOUND IN A ONE SINGLE PASS.
 
-    int sumSubarrayMins(vector<int>& arr) {
+    // i) Initial approach : 
+
+    // int sumSubarrayMins(vector<int>& arr) {
+    //     stack<int> st;
+    //     int n = arr.size();
+    //     vector<int> ple(n,-1),nle(n,n);   // This initialisation takes care of st.empty() case for ple and no next less element case for nle.
+    //     for(int i=0;i<n;i++){
+    //         while(!st.empty() && arr[st.top()] >= arr[i]){
+    //             nle[st.top()] = i;
+    //             st.pop();
+    //         }
+    //         if(!st.empty()) ple[i] = st.top();
+    //         st.push(i); 
+    //     }
+    //     int M = 1e9 + 7;
+    //     int ans = 0;
+    //     for(int i=0;i<n;i++){
+    //         ans = (1LL*ans + (1LL*arr[i]*(i-ple[i])*(nle[i]-i))%M)%M;
+    //     }
+    //     return ans;
+    // }
+
+    // ii) I FEEL BEST APPROACH : (SINCE TIME OPTIMISED AND SPACE OPTIMISED)
+
+    int sumSubarrayMins(vector<int>& arr){
         stack<int> st;
+        arr.push_back(0);
         int n = arr.size();
-        vector<int> ple(n,-1),nle(n,n);   // This initialisation takes care of st.empty() case for ple and no next less element case for nle.
-        for(int i=0;i<n;i++){
-            while(!st.empty() && arr[st.top()] >= arr[i]){
-                nle[st.top()] = i;
-                st.pop();
-            }
-            if(!st.empty()) ple[i] = st.top();
-            st.push(i); 
-        }
         int M = 1e9 + 7;
         int ans = 0;
         for(int i=0;i<n;i++){
-            ans = (1LL*ans + (1LL*arr[i]*(i-ple[i])*(nle[i]-i))%M)%M;
+            while(!st.empty() && arr[st.top()] >= arr[i]){
+                int cur = st.top();
+                st.pop();
+                int nleindex = i;
+                int pleindex = (st.empty()) ? -1 : st.top();
+                ans = (1LL*ans + (1LL*arr[cur]*(cur-pleindex)*(nleindex-cur))%M)%M;
+            }
+            st.push(i); 
         }
         return ans;
     }
