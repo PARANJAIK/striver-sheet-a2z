@@ -2,7 +2,7 @@
 
     // Ans) 
 
-    // i) Binary search approach : 
+    // i) Binary search approach :  
 
         int minimizeMax(vector<int>& A, int p) {
         sort(A.begin(), A.end());
