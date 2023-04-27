@@ -33,16 +33,16 @@
 
 // ii) using bit manipulation :
 
-vector<int> Solution::grayCode(int temp) {
-vector<int> ans;
-int sz = 1<<temp;
-for(int a=0;a<(sz);a++){
-ans.push_back(a ^ (a>>1));
-}
-return ans;
-}
+// vector<int> Solution::grayCode(int temp) {
+// vector<int> ans;
+// int sz = 1<<temp;
+// for(int a=0;a<(sz);a++){
+// ans.push_back(a ^ (a>>1));
+// }
+// return ans;
+// }
 
-// iii) recursive approach : 
+// iii) recursive approach : (BEST APPROACH):
 
 void solve(int bit, vector<int> &ans, int& cur) {
     if(bit < 0) {
