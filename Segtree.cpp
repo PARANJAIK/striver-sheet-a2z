@@ -1,4 +1,4 @@
-void segtree(int ind,int low,int high,vector<int>& a,vector<int>& seg){
+void segtree(int ind,int low,int high,vector<int>& a,vector<int>& seg){ 
     if(low == high){
         seg[ind] = a[low];
         return;
